@@ -1,10 +1,6 @@
 <template>
-  <v-container>
-    <v-layout text-center>
-      <v-flex xs12>
-        HelloWorld
-      </v-flex>
-    </v-layout>
+  <v-container justify-center text-center>
+    <h1>Hello World!</h1>
   </v-container>
 </template>
 

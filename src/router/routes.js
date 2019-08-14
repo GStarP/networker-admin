@@ -6,6 +6,10 @@
  */
 export default [
   {
+    path: '*',
+    redirect: '/404'
+  },
+  {
     path: '/404',
     name: '找不到页面',
     component: () => import('../views/ErrorPage.vue'),
@@ -17,19 +21,5 @@ export default [
   {
     path: '/',
     component: () => import('../views/Home.vue'),
-    meta: {
-      title: '主页'
-    }
-  },
-  {
-    path: '/about',
-    component: () => import('../views/About.vue'),
-    meta: {
-      title: '关于'
-    }
-  },
-  {
-    path: '*',
-    redirect: '/404'
   }
 ]

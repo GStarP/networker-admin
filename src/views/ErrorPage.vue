@@ -1,10 +1,6 @@
 <template>
-  <v-container>
-    <v-layout text-center>
-      <v-flex xs12>
-        Page Not Found
-      </v-flex>
-    </v-layout>
+  <v-container justify-center text-center>
+    <h1>Page Not Found</h1>
   </v-container>
 </template>
 
