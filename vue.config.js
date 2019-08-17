@@ -29,7 +29,7 @@ module.exports = {
     // vuetify
     ['vue-modules', 'vue', 'normal-modules', 'normal'].forEach((match) => {
       config.module.rule('scss').oneOf(match).use('sass-loader')
-        .tap(opt => Object.assign(opt, {data: `@import '~assets/scss/main.scss';`}))
+        .tap(opt => Object.assign(opt, {data: `@import '~assets/style/main.scss';`}))
     });
   },
   css: {
