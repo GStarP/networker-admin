@@ -1,6 +1,10 @@
 @import '~vuetify/src/styles/styles.sass';
 
 /* App.vue */
+$topBarMinHeight: 70px; // 顶部栏最小高度
+$topBarPaddingBtm: 15px; // 顶部栏下边距
+$topBarBGColor: #EEEEEE; // 顶部栏背景色
+
 $navigatorWidth: 260px; // 导航栏宽度
 $navigatorAvatarSpace: 8px; // 导航栏头像的上下边距
 $navigatorDividerSpace: 15px; // 导航栏分割线的左右边距
@@ -8,3 +12,5 @@ $navigatorItemMarginTop: 10px; // 导航单元上边距
 
 $logOutWidth: 100px; // 登出按钮宽度
 $logOutMarginBtm: 26px; // 登出按钮下边距
+
+$mainContainerMarginBtm: 80px; // 主容器下边距
