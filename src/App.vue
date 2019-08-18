@@ -11,11 +11,11 @@
       <!-- 下拉菜单 -->
       <v-menu offset-y>
         <template v-slot:activator="{ on }">
-          <v-icon class="" v-on="on">mdi-dots-vertical</v-icon>
+          <v-icon v-on="on">mdi-dots-vertical</v-icon>
         </template>
         <v-list>
           <v-list-item
-            v-for="(item, i) of adminOperateList"
+            v-for="(item, i) of operateList"
             :key="i"
             @click="item.onClick"
           >
@@ -28,18 +28,20 @@
       <!-- 侧边栏 -->
       <v-navigation-drawer permanent absolute>
         <v-list>
-          <v-list-item
-            v-for="(item, i) of adminNavigatorList"
-            :key="i"
-            @click="$router.push({ path: item.to })"
-          >
-            <v-list-item-icon>
-              <v-icon>mdi-{{ item.icon }}</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title>{{ item.name }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
+          <v-list-item-group v-model="navigatorActive" color="primary" mandatory>
+            <v-list-item
+              v-for="(item, i) of navigatorList"
+              :key="i"
+              @click="navigatorTo(item.to)"
+            >
+              <v-list-item-icon>
+                <v-icon>mdi-{{ item.icon }}</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                  <v-list-item-title>{{ item.name }}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-item-group>
         </v-list>
       </v-navigation-drawer>
       <!-- 主内容模块 -->
@@ -55,7 +57,7 @@
 export default {
   data () {
     return {
-      adminOperateList: [
+      operateList: [
         {
           name: '操作1',
           onClick: ''
@@ -69,31 +71,40 @@ export default {
           onClick: ''
         }
       ],
-      adminNavigatorList: [
+      navigatorList: [
         {
           name: '统计数据',
           icon: 'equalizer',
-          to: ''
+          to: 'statistics'
         },
         {
           name: '公司信息',
           icon: 'home-city',
-          to: ''
+          to: 'company-info'
         },
         {
-          name: '审核处理',
+          name: '申请处理',
           icon: 'checkbox-marked',
-          to: ''
+          to: 'request-handle'
         }
-      ]
+      ],
+      navigatorActive: 0 // 处于激活状态的导航的索引
     };
+  },
+  methods: {
+    navigatorTo (to) {
+      let p = this.$router.push({ path: to });
+      p.catch(e => {
+        // 捕获重复路由的异常，不打印到控制台(暂时没有别的方法解决)
+      });
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
 .list-item-operate-menu {
-  width: 55px;
+  width: $adminOperateMenuWidth;
   text-align: center;
 }
 </style>

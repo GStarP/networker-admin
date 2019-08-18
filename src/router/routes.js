@@ -20,6 +20,18 @@ export default [
   },
   {
     path: '/',
-    component: () => import('../views/Home.vue')
+    redirect: 'statistics'
+  },
+  {
+    path: '/statistics',
+    component: () => import('../views/Statistics.vue')
+  },
+  {
+    path: '/company-info',
+    component: () => import('../views/CompanyInfo.vue')
+  },
+  {
+    path: '/request-handle',
+    component: () => import('../views/RequestHandle.vue')
   }
 ];
