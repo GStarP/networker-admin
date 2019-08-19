@@ -3,7 +3,7 @@
     id="topBar"
     flat
   >
-    <v-toolbar-title>{{ topBarTitle }}</v-toolbar-title>
+    <v-toolbar-title v-if="navigatorShow">{{ topBarTitle }}</v-toolbar-title>
   </v-app-bar>
 </template>
 
@@ -12,7 +12,7 @@ import { mapState } from 'vuex';
 
 export default {
   computed: {
-    ...mapState(['topBarTitle'])
+    ...mapState(['navigatorShow', 'topBarTitle'])
   }
 };
 </script>
@@ -24,7 +24,7 @@ export default {
   padding-bottom: $topBarPaddingBtm;
 }
 #topBar {
-  margin-left: $navigatorWidth;
+  padding-left: $navigatorWidth;
   background-color: $topBarBGColor;
 }
 </style>

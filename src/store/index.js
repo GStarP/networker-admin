@@ -8,8 +8,9 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    topBarTitle: null,
-    navigatorShow: true
+    topBarTitle: null, // 顶部栏标题
+    navigatorShow: true, // 导航栏是否显示
+    compInfoLoading: true // 公司信息是否正在加载
   },
   getters,
   actions,
