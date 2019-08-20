@@ -1,6 +1,7 @@
 <template>
   <v-navigation-drawer
     id="navigator"
+    v-model="navigatorShow"
     mobile-break-point="960"
     width="260"
     app
@@ -81,6 +82,16 @@ export default {
       navigatorGradient: 'rgba(27, 27, 27, 0.7), rgba(27, 27, 27, 0.7)' // 导航栏背景图片的渐变效果
     };
   },
+  computed: {
+    navigatorShow: {
+      get () {
+        return this.$store.state.navigatorShow;
+      },
+      set (val) {
+        this.setNavigatorShow(val);
+      }
+    }
+  },
   mounted () {
     this.keepNavigator();
     this.keepTopBarTitle();
@@ -88,7 +99,7 @@ export default {
   methods: {
     ...mapMutations([
       'setTopBarTitle',
-      'toggleNavigatorShow'
+      'setNavigatorShow'
     ]),
     navigatorTo (to, name) {
       this.setTopBarTitle(name);
@@ -116,6 +127,7 @@ export default {
     // 防止刷新后丢失当前的顶部栏标题
     keepTopBarTitle () {
       let cur = '';
+      // TODO: 暂时使用 switch
       switch (this.$route.path.split('/')[1]) {
         case 'statistics':
           cur = '统计数据';
