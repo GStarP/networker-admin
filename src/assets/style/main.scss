@@ -7,6 +7,13 @@
   left: 50%;
 }
 
+// 横向排列的 flex 布局
+@mixin flexRow {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
 /* TopBar.vue */
 $topBarMinHeight: 70px; // 顶部栏最小高度
 $topBarPaddingBtm: 0px; // 顶部栏下边距
@@ -27,3 +34,15 @@ $mainContainerMarginBtm: 40px; // 主容器下边距
 /* CompanyInfo.vue */
 $comInfoCardHeight: 640px; // 公司信息列表卡片高度(暂且定死)
 $comInfoLoadingRadius: 30px; // 公司信息加载圆环半径
+
+/* RequestHandle.vue */
+$imgsDialogWidth: 80%; // 图片弹窗的宽度
+$maxTmgsDialogWideth: 900px; // 图片弹窗的最大宽度
+
+$imgsContainerPaddingVertical: 3%; // 包裹图片信息容器的上下边距
+
+$imgCardWidth: 300px; // 图片卡片(包括图片名和图片)的宽度
+$imgCardMarginHorizental: 5%; // 图片卡片的左右边距
+
+$imgNameFontSize: 18px; // 图片名的字体大小
+$imgNameMarginVertical: 10px; // 图片名的上下边距
