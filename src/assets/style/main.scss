@@ -32,7 +32,11 @@ $logOutMarginBtm: 26px; // 登出按钮下边距
 $mainContainerMarginBtm: 40px; // 主容器下边距
 
 /* CompanyInfo.vue */
-$comInfoCardHeight: 640px; // 公司信息列表卡片高度(暂且定死)
+$comInfoItemMinHeight: 120px; // 公司信息项最小高度
+
+$comInfoListPadding: 20px; // 公司信息列表内边距
+$comInfoListHeight: $comInfoListPadding * 2 + $comInfoItemMinHeight * 5; // 公司信息列表高度
+
 $comInfoLoadingRadius: 30px; // 公司信息加载圆环半径
 
 /* RequestHandle.vue */
