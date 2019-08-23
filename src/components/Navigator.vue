@@ -110,8 +110,8 @@ export default {
       });
     },
     logout () {
-      // TODO
-      alert('登出成功!');
+      // TODO:删除Cookies
+      this.$router.push('/login');
     },
     // 防止刷新后丢失当前激活的导航状态
     keepNavigator () {

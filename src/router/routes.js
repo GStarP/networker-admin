@@ -33,5 +33,9 @@ export default [
   {
     path: '/request-handle',
     component: () => import('../views/RequestHandle.vue')
+  },
+  {
+    path: '/login',
+    component: () => import('../views/Login.vue')
   }
 ];
