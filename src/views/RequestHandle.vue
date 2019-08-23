@@ -19,18 +19,18 @@
       <template v-slot:item.action="{ item }">
         <v-icon
           class="accept-btn mr-2"
-          @click="accept(item.id)"
+          @click="showConfirm(actionEnum.accept, item.id)"
         >mdi-checkbox-marked</v-icon>
         <v-icon
           class="refuse-btn"
-          @click="refuse(item.id)"
+          @click="showConfirm(actionEnum.refuse, item.id)"
         >mdi-close-box</v-icon>
       </template>
     </v-data-table>
-    <!-- 展示验证图片的 dialog -->
+    <!-- 展示验证图片的弹窗 -->
     <!-- width 和 max-width 写在 style 里没用 -->
     <v-dialog
-      v-model="dialogShow"
+      v-model="imgDialogShow"
       width="80%"
       max-width="960"
     >
@@ -50,6 +50,36 @@
             ></v-img>
           </v-card>
         </v-container>
+      </v-card>
+    </v-dialog>
+    <!-- 确认操作的弹窗 -->
+    <v-dialog
+      v-model="actionDialogShow"
+      max-width="280"
+      persistent
+    >
+      <v-card>
+        <v-card-title>提示</v-card-title>
+        <v-card-text class="action-dialog-text">
+          确定要 <b>{{ currentAction }}</b> 此申请吗？<br/>操作一经确认无法撤销！
+        </v-card-text>
+        <v-card-actions>
+          <div class="flex-grow-1"></div>
+          <v-btn
+            color="green"
+            @click="submitAction()"
+            text
+          >
+            <b>确认</b>
+          </v-btn>
+          <v-btn
+            color="error"
+            @click="actionDialogShow = false"
+            text
+          >
+            <b>取消</b>
+          </v-btn>
+        </v-card-actions>
       </v-card>
     </v-dialog>
   </v-container>
@@ -133,7 +163,7 @@ export default {
           id: 4,
           name: '紫婷银行',
           num: 200000,
-          code: 'ZZN200000',
+          code: 'LZT200000',
           email: 'mimilee@gmail.com',
           imgs: [
             'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566452659496&di=9300a3b95ee88c81063565ca1bbba4a0&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201806%2F29%2F20180629184010_CFA5a.thumb.700_0.jpeg',
@@ -152,16 +182,46 @@ export default {
           ]
         }
       ],
-      dialogShow: false, // 是否显示验证图片
+      imgDialogShow: false, // 是否显示图片展示弹窗
       // 当前的验证图片路径
       imgs: [],
-      imgRatio: 7 / 10 // 图片宽高比
+      imgRatio: 7 / 10, // 图片宽高比,
+      actionDialogShow: false, // 是否显示操作确认弹窗
+      // 同意或拒绝的枚举
+      actionEnum: {
+        accept: '同意',
+        refuse: '拒绝'
+      },
+      currentAction: 1, // 当前弹窗中显示的操作
+      currentRequestId: undefined // 当前操作的申请 id
     };
   },
   computed: {
     ...mapState(['requestsLoading'])
   },
   methods: {
+    // 展示指定申请的验证图片
+    showImgs (imgs) {
+      this.imgs = imgs;
+      this.imgDialogShow = true;
+    },
+    // 显示操作确认弹窗
+    showConfirm (type, id) {
+      this.currentAction = type;
+      this.currentRequestId = id;
+      this.actionDialogShow = true;
+    },
+    // 点击确认提交对申请的操作
+    submitAction () {
+      this.actionDialogShow = false;
+      if (this.currentAction === this.actionEnum.accept) {
+        this.accept(this.currentRequestId);
+      } else if (this.currentAction === this.actionEnum.refuse) {
+        this.refuse(this.currentRequestId);
+      } else {
+        alert('操作非法!');
+      }
+    },
     // 同意申请
     accept (id) {
       // TODO
@@ -171,10 +231,6 @@ export default {
     refuse (id) {
       // TODO
       alert(`拒绝申请${id}`);
-    },
-    showImgs (imgs) {
-      this.imgs = imgs;
-      this.dialogShow = true;
     }
   }
 };
@@ -206,5 +262,10 @@ export default {
   font-size: $imgNameFontSize;
   text-align: center;
   margin: $imgNameMarginVertical 0;
+}
+.action-dialog-text {
+  margin-top: $actionDialogTextMarginTop;
+  padding-left: $actionDialogTextPaddingLeft;
+  font-size: $actionDialogTextFontSize;
 }
 </style>
