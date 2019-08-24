@@ -5,5 +5,5 @@ export default {
   setNavigatorShow: set('navigatorShow'),
   toggleNavigatorShow: toggle('navigatorShow'),
   toggleCompInfoLoading: toggle('compInfoLoading'),
-  toggleRequestsLoading: toggle('requestsLoading')
+  setRequestsLoading: set('requestsLoading')
 };

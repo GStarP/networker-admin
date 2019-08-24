@@ -117,7 +117,7 @@ export default {
     keepNavigator () {
       let cur = 0;
       for (let i = 0; i < this.navigatorList.length; i++) {
-        if (this.$route.path.split('/')[1] === this.navigatorList[i].to) {
+        if (this.$route.path.split('/')[2] === this.navigatorList[i].to) {
           cur = i;
           break;
         }
@@ -128,7 +128,7 @@ export default {
     keepTopBarTitle () {
       let cur = '';
       // TODO: 暂时使用 switch
-      switch (this.$route.path.split('/')[1]) {
+      switch (this.$route.path.split('/')[2]) {
         case 'statistics':
           cur = '统计数据';
           break;
