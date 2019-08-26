@@ -59,6 +59,7 @@
 <script>
 import { mapState, mapMutations } from 'vuex';
 import { requirePagination } from '../utils/common';
+import ICompanyInfo from '../api/ICompanyInfo';
 
 export default {
   data () {
@@ -68,28 +69,7 @@ export default {
       totalPages: 20, // 总页数
       keyword: '', // 搜索关键词
       // 当前页的公司信息列表
-      companyInfoList: [
-        {
-          id: 996,
-          name: '郝呆科技'
-        },
-        {
-          id: 309,
-          name: '紫宁娱乐'
-        },
-        {
-          id: 1004,
-          name: '小草影业'
-        },
-        {
-          id: 2000,
-          name: '紫婷服装'
-        },
-        {
-          id: 777,
-          name: '小七电竞'
-        }
-      ]
+      companyInfoList: undefined
     };
   },
   computed: {
@@ -103,14 +83,24 @@ export default {
     this.fetchCompanyInfoPage();
   },
   methods: {
-    ...mapMutations(['toggleCompInfoLoading']),
+    ...mapMutations(['setCompInfoLoading']),
     search () {
       // TODO
       alert(this.keyword);
     },
-    // TODO: 调用真实接口
+    // 请求并渲染分页后的公司信息
     fetchCompanyInfoPage () {
-      alert(this.pageNum);
+      window.scrollTo(0, 0);
+      this.setCompInfoLoading(true);
+      ICompanyInfo.getCompanyInfoList(this.pageNum, this.pageSize).then((res) => {
+        if (res.code === 200) {
+          this.totalPages = res.data.totalPages;
+          this.companyInfoList = res.data.companyInfoList;
+        } else {
+          alert(res.msg);
+        }
+        this.setCompInfoLoading(false);
+      });
     }
   }
 };
@@ -119,6 +109,7 @@ export default {
 <style lang="scss" scoped>
 .card-company-info {
   padding: $comInfoListPadding;
+  min-height: $comInfoListHeight;
 }
 .company-info-item {
   min-height: $comInfoItemMinHeight;

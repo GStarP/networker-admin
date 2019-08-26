@@ -6,7 +6,7 @@
   >
     <!-- 页面标题 -->
     <v-toolbar-title>
-      <!-- 用于在导航栏由于屏幕宽度被收起时将其展开 的按钮 -->
+      <!-- 用于在导航栏由于屏幕宽度被收起时将其展开的按钮 -->
       <v-btn
         id="showNaviBtn"
         v-if="navigatorMini"
@@ -26,7 +26,7 @@ import { mapState, mapMutations } from 'vuex';
 export default {
   data () {
     return {
-      navigatorMini: false // 导航栏是否被收起(宽度小于 break-point)
+      navigatorMini: false // 导航栏是否被收起(宽度小于导航栏的 break-point)
     };
   },
   computed: {
@@ -46,6 +46,9 @@ export default {
         this.navigatorMini = true;
       } else {
         this.navigatorMini = false;
+        if (!this.navigatorShow) {
+          this.toggleNavigatorShow();
+        }
       }
     },
     // 在导航栏被收起的情况下将其展开
