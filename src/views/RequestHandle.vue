@@ -1,9 +1,8 @@
 <template>
   <v-container justify-center>
-    <v-card>
+    <v-card class="request-list-card">
       <!-- 正常渲染的数据表格 -->
       <v-data-table
-        class="elevation-2"
         :headers="headers"
         :items="requests"
         :loading="requestsLoading"
@@ -11,7 +10,7 @@
         no-data-text="暂无申请"
         hide-default-footer
       >
-        <!-- TODO: 目前只会傻傻地全写一遍 -->
+        <!-- TODO: 目前只能傻傻地全写一遍 -->
         <template v-slot:header.name="{ header }">
           <span class="request-table-header">{{ header.text }}</span>
         </template>
@@ -47,6 +46,16 @@
           >mdi-close-box</v-icon>
         </template>
       </v-data-table>
+      <!-- 分页 -->
+      <div class="request-pagination-container">
+        <v-pagination
+          v-if="showPagination"
+          v-model="pageNum"
+          :length="totalPages"
+          :total-visible="totalPages"
+          @input="fetchRequestPage()"
+        ></v-pagination>
+      </div>
     </v-card>
     <!-- 展示验证图片的弹窗 -->
     <!-- width 和 max-width 写在 style 里没用 -->
@@ -120,6 +129,7 @@
 <script>
 import { mapState, mapMutations } from 'vuex';
 import IRequestHandle from '../api/IRequestHandle';
+import { requirePagination } from '../utils/common';
 
 export default {
   data () {
@@ -190,18 +200,24 @@ export default {
     };
   },
   computed: {
-    ...mapState(['requestsLoading'])
+    ...mapState(['requestsLoading']),
+    showPagination () {
+      return requirePagination(this.requests, this.pageSize, this.totalPages);
+    }
   },
   mounted () {
-    this.fetchRequestPage(this.pageNum, this.pageSize);
+    this.fetchRequestPage();
   },
   methods: {
     ...mapMutations(['setRequestsLoading']),
     // 请求并渲染分页后的申请列表
-    fetchRequestPage (pageNum, pageSize) {
+    fetchRequestPage () {
+      // 为了手机端的交互体验, 换页时要回到顶部
+      window.scrollTo(0, 0);
       this.setRequestsLoading(true);
       IRequestHandle.getRequestList(this.pageNum, this.pageSize).then((res) => {
         if (res.code === 200) {
+          this.totalPages = res.data.totalPages;
           this.requests = res.data.requestList;
         } else {
           alert(res.msg);
@@ -276,6 +292,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.request-list-card {
+  padding: 10px 20px;
+}
+.request-pagination-container {
+  margin: 10px 0;
+}
 .request-table-header {
   font-size: 16px;
 }

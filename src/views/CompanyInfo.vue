@@ -43,11 +43,11 @@
           <!-- 用一个 div 包裹防止其无视边距的限制而不适配手机端 -->
           <div class="company-info-pagination-container">
             <v-pagination
-              v-if="requirePagination"
+              v-if="showPagination"
               v-model="pageNum"
               :length="totalPages"
               :total-visible="totalPages"
-              @input="fetchPage()"
+              @input="fetchCompanyInfoPage()"
           ></v-pagination>
           </div>
         </v-card>
@@ -58,6 +58,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex';
+import { requirePagination } from '../utils/common';
 
 export default {
   data () {
@@ -94,21 +95,12 @@ export default {
   computed: {
     ...mapState(['compInfoLoading']),
     // 是否需要显示分页
-    requirePagination () {
-      if (this.companyInfoList === undefined) {
-        // 公司信息列表未定义
-        return false;
-      } else if (this.companyInfoList.length < this.pageSize) {
-        // 公司信息不足一页
-        return false;
-      } else if (this.totalPages === 1) {
-        // 公司信息恰好一页
-        return false;
-      } else {
-        // 其他情况需要显示分页
-        return true;
-      }
+    showPagination () {
+      return requirePagination(this.companyInfoList, this.pageSize, this.totalPages);
     }
+  },
+  mounted () {
+    this.fetchCompanyInfoPage();
   },
   methods: {
     ...mapMutations(['toggleCompInfoLoading']),
@@ -117,7 +109,7 @@ export default {
       alert(this.keyword);
     },
     // TODO: 调用真实接口
-    fetchPage () {
+    fetchCompanyInfoPage () {
       alert(this.pageNum);
     }
   }
