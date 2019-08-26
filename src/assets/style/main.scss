@@ -14,6 +14,13 @@
   flex-wrap: wrap;
 }
 
+// flex 布局的横纵向居中
+@mixin allCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* TopBar.vue */
 $topBarMinHeight: 70px; // 顶部栏最小高度
 $topBarPaddingBtm: 0px; // 顶部栏下边距
@@ -34,7 +41,7 @@ $mainContainerMarginBtm: 40px; // 主容器下边距
 /* CompanyInfo.vue */
 $comInfoItemMinHeight: 120px; // 公司信息项最小高度
 
-$comInfoListPadding: 20px; // 公司信息列表内边距
+$comInfoListPadding: 10px; // 公司信息列表内边距
 $comInfoListHeight: $comInfoListPadding * 2 + $comInfoItemMinHeight * 5; // 公司信息列表高度
 
 $comInfoLoadingRadius: 30px; // 公司信息加载圆环半径
