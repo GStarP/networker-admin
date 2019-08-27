@@ -26,7 +26,7 @@ import { mapState, mapMutations } from 'vuex';
 export default {
   data () {
     return {
-      navigatorMini: false // 导航栏是否被收起(宽度小于导航栏的 break-point)
+      navigatorMini: false // 导航栏是否被收起
     };
   },
   computed: {
@@ -42,7 +42,8 @@ export default {
   methods: {
     ...mapMutations(['toggleNavigatorShow']),
     onWidthChange () {
-      if (window.innerWidth <= 960) {
+      // 同 Navigator 的 break-point
+      if (window.innerWidth < 1025) {
         this.navigatorMini = true;
       } else {
         this.navigatorMini = false;

@@ -36,7 +36,7 @@
             >
               <!-- TODO: 手机端的适配 -->
               <v-list-item
-                class="company-info-item-pc"
+                :class="{ 'company-info-item-pc': !isPhone, 'company-info-item-phone': isPhone }"
                 :key="item.id"
               >
                 <div class="company-identity">
@@ -103,7 +103,7 @@
                 </div>
                 <div class="company-action">
                   <v-icon @click="editCompanyInfo()" large>mdi-pencil-box</v-icon>
-                  <v-icon class="ml-2" @click="deleteCompanyInfo()" large>mdi-delete</v-icon>
+                  <v-icon :class="{ 'ml-2': !isPhone }" @click="deleteCompanyInfo()" large>mdi-delete</v-icon>
                 </div>
               </v-list-item>
               <v-divider :key="`divider-${i}`" v-if="i != (companyInfoList.length - 1)"></v-divider>
@@ -139,7 +139,8 @@ export default {
       totalPages: 20, // 总页数
       keyword: '', // 搜索关键词
       companyInfoList: undefined, // 当前页的公司信息列表
-      curCompanyInfo: undefined // 当前正在操作的公司信息
+      curCompanyInfo: undefined, // 当前正在操作的公司信息
+      isPhone: false // 是否正在手机上运行
     };
   },
   computed: {
@@ -150,7 +151,14 @@ export default {
     }
   },
   mounted () {
+    // 先根据屏幕宽度判断设备类型
+    this.onWidthChange();
+    window.addEventListener('resize', this.onWidthChange);
+    // 获取分页数据
     this.fetchCompanyInfoPage();
+  },
+  beforeDestroy () {
+    window.removeEventListener('resize', this.onWidthChange);
   },
   methods: {
     ...mapMutations(['setCompInfoLoading']),
@@ -180,6 +188,14 @@ export default {
     // TODO: 删除公司信息
     deleteCompanyInfo () {
 
+    },
+    // 根据宽度判断设备是否为手机
+    onWidthChange () {
+      if (window.innerWidth <= 500) {
+        this.isPhone = true;
+      } else {
+        this.isPhone = false;
+      }
     }
   }
 };
@@ -200,37 +216,87 @@ export default {
     @include allCenter;
     flex-direction: column;
     .company-name {
-      font-size: 18px;
+      font-size: $comNameSize;
       font-weight: bold;
     }
     .company-symbol {
-      font-size: 16px;
-      color: #666;
+      font-size: $comSymbolSize;
+      color: $grey-6;
     }
   }
   .company-attrs {
     @include allCenter;
     flex-direction: column;
     flex-wrap: wrap;
-    height: 120px;
+    height: $comInfoItemMinHeight;
     flex: 1;
-    margin-bottom: 10px;
+    margin-bottom: $comAttrMarginVertical;
     >div {
       @include allCenter;
       flex-direction: column;
-      height: 45px;
-      margin-top: 10px;
+      height: $comAttrHeight;
+      margin-top: $comAttrMarginVertical;
       .company-attr-name {
-        font-size: 12px;
-        color: #888;
+        font-size: $comAttrSize;
+        color: $grey-8;
       }
     }
   }
   .company-action {
     >i {
-      color: #888;
+      color: $grey-8;
       &:hover {
-        color: #444;
+        color: $grey-3;
+      }
+    }
+  }
+}
+.company-info-item-phone {
+  @include allCenter;
+  flex-direction: column;
+  margin: $comAttrMarginVertical 0;
+  &:hover {
+    background-color: #EEE;
+  }
+  .company-identity {
+    @include allCenter;
+    flex-direction: column;
+    width: 100%;
+    .company-name {
+      font-size: $comNameSize;
+      font-weight: bold;
+    }
+    .company-symbol {
+      font-size: $comSymbolSize;
+      color: $grey-6;
+    }
+  }
+  .company-attrs {
+    @include allCenter;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    >div {
+      @include allCenter;
+      flex-direction: column;
+      height: $comAttrHeight;
+      width: 25%;
+      margin-top: $comAttrMarginVertical;
+      .company-attr-name {
+        font-size: $comAttrSize;
+        color: $grey-8;
+      }
+    }
+  }
+  .company-action {
+    margin-top: $comAttrMarginVertical * 2;
+    width: 100%;
+    @include flexRow;
+    justify-content: space-evenly;
+    >i {
+      color: $grey-8;
+      &:hover {
+        color: $grey-3;
       }
     }
   }
@@ -243,7 +309,7 @@ export default {
   margin-top: - $comInfoLoadingRadius;
   margin-left: - $comInfoLoadingRadius;
   .loading-text {
-    color: #1976D2; // primary
+    color: $primary-blue; // primary
   }
 }
 </style>

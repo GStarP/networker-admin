@@ -2,7 +2,7 @@
   <v-navigation-drawer
     id="navigator"
     v-model="navigatorShow"
-    mobile-break-point="960"
+    mobile-break-point="1025"
     width="260"
     app
     dark
