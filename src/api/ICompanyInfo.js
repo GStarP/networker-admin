@@ -115,5 +115,22 @@ export default {
         resolve(res);
       }, 3000);
     });
+  },
+  /**
+   * @author hxw
+   * @des 删除指定公司信息
+   * @param {number} id 公司信息id
+   */
+  deleteCompanyInfo (id) {
+    let res = {
+      code: 200,
+      data: null,
+      msg: ''
+    };
+    return new Promise((resolve, reject) => {
+      setTimeout(function () {
+        resolve(res);
+      }, 1000);
+    });
   }
 };

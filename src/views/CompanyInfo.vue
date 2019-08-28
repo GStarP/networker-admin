@@ -103,7 +103,7 @@
                 </div>
                 <div class="company-action">
                   <v-icon @click="editCompanyInfo()" large>mdi-pencil-box</v-icon>
-                  <v-icon :class="{ 'ml-2': !isPhone }" @click="deleteCompanyInfo()" large>mdi-delete</v-icon>
+                  <v-icon :class="{ 'ml-2': !isPhone }" @click="deleteCompanyInfo(item.id)" large>mdi-delete</v-icon>
                 </div>
               </v-list-item>
               <v-divider :key="`divider-${i}`" v-if="i != (companyInfoList.length - 1)"></v-divider>
@@ -123,6 +123,47 @@
         </v-card>
       </v-flex>
     </v-layout>
+    <!-- 确认操作的弹窗 -->
+    <v-dialog
+      v-model="dialogShow"
+      max-width="280"
+      persistent
+    >
+      <v-card>
+        <v-card-title>提示</v-card-title>
+        <v-card-text class="action-dialog-text">
+          确定要 <b>删除</b> 这条信息吗？<br/>操作一经确认无法撤销！
+        </v-card-text>
+        <v-card-actions>
+          <div class="flex-grow-1"></div>
+          <v-btn
+            color="green"
+            @click="submitDelete()"
+            text
+          >
+            <b>确认</b>
+          </v-btn>
+          <v-btn
+            color="error"
+            @click="dialogShow = false"
+            text
+          >
+            <b>取消</b>
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <!-- 顶部居中的提示框 -->
+    <v-snackbar
+      v-model="snackbarShow"
+      :color="snackBarColor"
+      :timeout="2000"
+      top
+    >
+      <v-icon color="white" class="mr-3">{{ snackbarIcon }}</v-icon>
+      <div>{{ snackBarText }}</div>
+      <v-icon @click="snackbarShow = false">mdi-close-circle</v-icon>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -140,7 +181,12 @@ export default {
       keyword: '', // 搜索关键词
       companyInfoList: undefined, // 当前页的公司信息列表
       curCompanyInfo: undefined, // 当前正在操作的公司信息
-      isPhone: false // 是否正在手机上运行
+      isPhone: false, // 是否正在手机上运行
+      dialogShow: false, // 是否显示提示框
+      snackbarShow: false, // 是否显示提示框
+      snackbarIcon: undefined, // 提示框中图标
+      snackBarText: undefined, // 提示框中文字
+      snackBarColor: undefined // 提示框主题颜色
     };
   },
   computed: {
@@ -186,8 +232,20 @@ export default {
 
     },
     // TODO: 删除公司信息
-    deleteCompanyInfo () {
-
+    deleteCompanyInfo (id) {
+      this.curCompanyInfo = id;
+      this.dialogShow = true;
+    },
+    submitDelete () {
+      this.dialogShow = false;
+      let id = this.curCompanyInfo;
+      ICompanyInfo.deleteCompanyInfo(id).then((res) => {
+        if (res.code === 200) {
+          this.showSuccessSnackbar('删除成功！');
+        } else {
+          this.showErrorSnackbar('删除失败！');
+        }
+      });
     },
     // 根据宽度判断设备是否为手机
     onWidthChange () {
@@ -196,6 +254,25 @@ export default {
       } else {
         this.isPhone = false;
       }
+    },
+    /**
+     * @author hxw
+     * @des 展示指定样式的提示
+     * @param {string} icon 'mdi-xxx'
+     * @param {string} text 'hxwnb'
+     * @param {string} color 'success'
+     */
+    showSnackbar (icon, text, color) {
+      this.snackbarIcon = icon;
+      this.snackBarText = text;
+      this.snackBarColor = color;
+      this.snackbarShow = true;
+    },
+    showSuccessSnackbar (text) {
+      this.showSnackbar('mdi-checkbox-marked-circle', text, 'success');
+    },
+    showErrorSnackbar (text) {
+      this.showSnackbar('mdi-alert', text, 'error');
     }
   }
 };
