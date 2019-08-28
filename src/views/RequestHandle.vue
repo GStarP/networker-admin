@@ -96,18 +96,20 @@
         <v-card-actions>
           <div class="flex-grow-1"></div>
           <v-btn
+            class="tip-btn"
             color="green"
             @click="submitAction()"
             text
           >
-            <b>确认</b>
+            确认
           </v-btn>
           <v-btn
+            class="tip-btn"
             color="error"
             @click="actionDialogShow = false"
             text
           >
-            <b>取消</b>
+            取消
           </v-btn>
         </v-card-actions>
       </v-card>

@@ -102,7 +102,7 @@
                   </div>
                 </div>
                 <div class="company-action">
-                  <v-icon @click="editCompanyInfo()" large>mdi-pencil-box</v-icon>
+                  <v-icon @click="editCompanyInfo(item)" large>mdi-pencil-box</v-icon>
                   <v-icon :class="{ 'ml-2': !isPhone }" @click="deleteCompanyInfo(item.id)" large>mdi-delete</v-icon>
                 </div>
               </v-list-item>
@@ -123,9 +123,145 @@
         </v-card>
       </v-flex>
     </v-layout>
-    <!-- 确认操作的弹窗 -->
+    <!-- 修改信息的弹窗 -->
     <v-dialog
-      v-model="dialogShow"
+      v-model="editDialogShow"
+      max-width="80%"
+      persistent
+    >
+      <v-card>
+        <v-card-title>修改信息</v-card-title>
+        <v-form
+          id="companyInfoForm"
+          ref="comInfoForm"
+          v-model="valid"
+        >
+          <v-text-field
+            v-model="curCompanyInfo.name"
+            :class="{ 'company-info-textfield-pc': !isPhone }"
+            :rules="comInfoRules.name"
+            label="名称"
+          ></v-text-field>
+          <v-text-field
+            v-model="curCompanyInfo.symbol"
+            :class="{ 'company-info-textfield-pc': !isPhone }"
+            :rules="comInfoRules.symbol"
+            label="代码">
+          </v-text-field>
+          <v-text-field
+            v-model="curCompanyInfo.amount"
+            :class="{ 'company-info-textfield-pc': !isPhone }"
+            :rules="comInfoRules.amount"
+            label="成交额(亿)"
+          ></v-text-field>
+          <v-text-field
+            v-model="curCompanyInfo.amplitude"
+            :class="{ 'company-info-textfield-pc': !isPhone }"
+            :rules="comInfoRules.amplitude"
+            label="振幅(%)"
+          ></v-text-field>
+          <v-text-field
+            v-model="curCompanyInfo.change"
+            :class="{ 'company-info-textfield-pc': !isPhone }"
+            :rules="comInfoRules.change"
+            label="涨跌额"
+          ></v-text-field>
+          <v-text-field
+            v-model="curCompanyInfo.close"
+            :class="{ 'company-info-textfield-pc': !isPhone }"
+            :rules="comInfoRules.close"
+            label="收盘价"
+          ></v-text-field>
+          <v-text-field
+            v-model="curCompanyInfo.highest"
+            :class="{ 'company-info-textfield-pc': !isPhone }"
+            :rules="comInfoRules.highest"
+            label="最高价"
+          ></v-text-field>
+          <v-text-field
+            v-model="curCompanyInfo.list_age"
+            :class="{ 'company-info-textfield-pc': !isPhone }"
+            :rules="comInfoRules.list_age"
+            label="市龄"
+          ></v-text-field>
+          <v-text-field
+            v-model="curCompanyInfo.lowest"
+            :class="{ 'company-info-textfield-pc': !isPhone }"
+            :rules="comInfoRules.lowest"
+            label="最低价"
+          ></v-text-field>
+          <v-text-field
+            v-model="curCompanyInfo.open"
+            :class="{ 'company-info-textfield-pc': !isPhone }"
+            :rules="comInfoRules.open"
+            label="开盘价"
+          ></v-text-field>
+          <v-text-field
+            v-model="curCompanyInfo.pb"
+            :class="{ 'company-info-textfield-pc': !isPhone }"
+            :rules="comInfoRules.pb"
+            label="市净率"
+          ></v-text-field>
+          <v-text-field
+            v-model="curCompanyInfo.pct_chg"
+            :class="{ 'company-info-textfield-pc': !isPhone }"
+            :rules="comInfoRules.pct_chg"
+            label="涨跌幅(%)"
+          ></v-text-field>
+          <v-text-field
+            v-model="curCompanyInfo.pe"
+            :class="{ 'company-info-textfield-pc': !isPhone }"
+            :rules="comInfoRules.pe"
+            label="市盈率"
+          ></v-text-field>
+          <v-text-field
+            v-model="curCompanyInfo.pre_close"
+            :class="{ 'company-info-textfield-pc': !isPhone }"
+            :rules="comInfoRules.pre_close"
+            label="昨日收盘价"
+          ></v-text-field>
+          <v-text-field
+            v-model="curCompanyInfo.turnover_rate"
+            :class="{ 'company-info-textfield-pc': !isPhone }"
+            :rules="comInfoRules.turnover_rate"
+            label="换手率(%)"
+          ></v-text-field>
+          <v-text-field
+            v-model="curCompanyInfo.vol"
+            :class="{ 'company-info-textfield-pc': !isPhone }"
+            :rules="comInfoRules.vol"
+            label="成交量(万)"
+          ></v-text-field>
+        </v-form>
+        <div class="edit-btn-container">
+          <v-btn
+            color="success"
+            :elevation="2"
+            :disabled="!valid"
+            @click="submitEdit()"
+          >
+            提交
+          </v-btn>
+          <v-btn
+            color="warning"
+            :elevation="2"
+            @click="$refs.comInfoForm.reset()"
+          >
+            清空
+          </v-btn>
+          <v-btn
+            color="error"
+            :elevation="2"
+            @click="editDialogShow = false"
+          >
+            取消
+          </v-btn>
+        </div>
+      </v-card>
+    </v-dialog>
+    <!-- 确认删除的弹窗 -->
+    <v-dialog
+      v-model="delDialogShow"
       max-width="280"
       persistent
     >
@@ -137,18 +273,20 @@
         <v-card-actions>
           <div class="flex-grow-1"></div>
           <v-btn
+            class="tip-btn"
             color="green"
             @click="submitDelete()"
             text
           >
-            <b>确认</b>
+            确认
           </v-btn>
           <v-btn
+            class="tip-btn"
             color="error"
-            @click="dialogShow = false"
+            @click="delDialogShow = false"
             text
           >
-            <b>取消</b>
+            取消
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -180,9 +318,84 @@ export default {
       totalPages: 20, // 总页数
       keyword: '', // 搜索关键词
       companyInfoList: undefined, // 当前页的公司信息列表
-      curCompanyInfo: undefined, // 当前正在操作的公司信息
+      // 当前正在修改的公司信息
+      curCompanyInfo: {
+        id: 0,
+        amount: 0,
+        amplitude: 0,
+        change: 0,
+        close: 0,
+        highest: 0,
+        list_age: 0,
+        lowest: 0,
+        name: '',
+        open: 0,
+        pb: 0,
+        pct_chg: 0,
+        pe: 0,
+        pre_close: 0,
+        symbol: '',
+        turnover_rate: 0,
+        vol: 0
+      },
+      // 修改公司信息表单的验证规则
+      comInfoRules: {
+        amount: [
+          v => !!v || '此项不能为空'
+        ],
+        amplitude: [
+          v => !!v || '此项不能为空'
+        ],
+        change: [
+          v => !!v || '此项不能为空'
+        ],
+        close: [
+          v => !!v || '此项不能为空'
+        ],
+        highest: [
+          v => !!v || '此项不能为空'
+        ],
+        list_age: [
+          v => !!v || '此项不能为空'
+        ],
+        lowest: [
+          v => !!v || '此项不能为空'
+        ],
+        name: [
+          v => !!v || '此项不能为空',
+          v => (v && v.length <= 10) || '不能超过10位'
+        ],
+        open: [
+          v => !!v || '此项不能为空'
+        ],
+        pb: [
+          v => !!v || '此项不能为空'
+        ],
+        pct_chg: [
+          v => !!v || '此项不能为空'
+        ],
+        pe: [
+          v => !!v || '此项不能为空'
+        ],
+        pre_close: [
+          v => !!v || '此项不能为空'
+        ],
+        symbol: [
+          v => !!v || '此项不能为空',
+          v => (v && v.length <= 10) || '不能超过10位'
+        ],
+        turnover_rate: [
+          v => !!v || '此项不能为空'
+        ],
+        vol: [
+          v => !!v || '此项不能为空'
+        ]
+      },
+      valid: false, // 修改公司信息表单是否合格
+      delCompanyInfoId: undefined, // 当前正在删除的公司信息id
       isPhone: false, // 是否正在手机上运行
-      dialogShow: false, // 是否显示提示框
+      editDialogShow: false, // 是否显示编辑信息提示
+      delDialogShow: false, // 是否显示删除信息提示
       snackbarShow: false, // 是否显示提示框
       snackbarIcon: undefined, // 提示框中图标
       snackBarText: undefined, // 提示框中文字
@@ -208,8 +421,8 @@ export default {
   },
   methods: {
     ...mapMutations(['setCompInfoLoading']),
+    // TODO: 搜索公司信息
     search () {
-      // TODO
       alert(this.keyword);
     },
     // 请求并渲染分页后的公司信息
@@ -227,19 +440,33 @@ export default {
         this.setCompInfoLoading(false);
       });
     },
-    // TODO: 编辑公司信息
-    editCompanyInfo () {
-
+    // 请求编辑公司信息
+    editCompanyInfo (infoItem) {
+      // 不使用深拷贝的话会在编辑时影响列表中的信息
+      this.curCompanyInfo = JSON.parse(JSON.stringify(infoItem));
+      this.editDialogShow = true;
     },
-    // TODO: 删除公司信息
+    // 提交修改后的公司信息
+    submitEdit () {
+      this.editDialogShow = false;
+      alert(JSON.stringify(this.curCompanyInfo));
+      ICompanyInfo.editCompanyInfo(this.curCompanyInfo).then((res) => {
+        if (res.code === 200) {
+          this.showSuccessSnackbar('修改成功！');
+        } else {
+          this.showErrorSnackbar('修改失败！');
+        }
+      });
+    },
+    // 请求删除公司信息
     deleteCompanyInfo (id) {
-      this.curCompanyInfo = id;
-      this.dialogShow = true;
+      this.delCompanyInfoId = id;
+      this.delDialogShow = true;
     },
+    // 确认删除公司信息
     submitDelete () {
-      this.dialogShow = false;
-      let id = this.curCompanyInfo;
-      ICompanyInfo.deleteCompanyInfo(id).then((res) => {
+      this.delDialogShow = false;
+      ICompanyInfo.deleteCompanyInfo(this.delCompanyInfoId).then((res) => {
         if (res.code === 200) {
           this.showSuccessSnackbar('删除成功！');
         } else {
@@ -387,6 +614,25 @@ export default {
   margin-left: - $comInfoLoadingRadius;
   .loading-text {
     color: $primary-blue; // primary
+  }
+}
+#companyInfoForm {
+  margin: 0 $comInfoFormMargin $comInfoFormMargin $comInfoFormMargin;
+  @include flexRow;
+}
+.company-info-textfield-pc {
+  width: $comInfoTextFieldWidth;
+  margin-left: $comInfoTextFieldMargin;
+}
+.edit-btn-container {
+  display: flex;
+  flex-direction: row-reverse;
+  padding: 0 $comInfoFormMargin $comInfoFormMargin 0;
+  >button {
+    width: $editComInfoBtnWidth;
+    &:not(:first-child) {
+      margin-right: $editComInfoBtnMargin;
+    }
   }
 }
 </style>

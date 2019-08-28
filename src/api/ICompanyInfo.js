@@ -132,5 +132,22 @@ export default {
         resolve(res);
       }, 1000);
     });
+  },
+  /**
+   * @author hxw
+   * @des 修改公司信息
+   * @param {CompanyInfo} info 公司信息实体
+   */
+  editCompanyInfo (info) {
+    let res = {
+      code: 200,
+      data: null,
+      msg: ''
+    };
+    return new Promise((resolve, reject) => {
+      setTimeout(function () {
+        resolve(res);
+      }, 1000);
+    });
   }
 };

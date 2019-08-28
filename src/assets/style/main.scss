@@ -33,6 +33,7 @@ $grey-3: #333;
 $grey-6: #666;
 $grey-8: #888;
 $primary-blue: #1976D2;
+$btnTextFontWeight: 400;
 
 /* TopBar.vue */
 $topBarMinHeight: 70px; // 顶部栏最小高度
@@ -67,6 +68,13 @@ $comInfoListHeight: $comInfoListPadding * 2 + $comInfoItemMinHeight * 5; // 公�
 
 $comInfoLoadingRadius: 30px; // 公司信息加载圆环半径
 
+$comInfoFormMargin: 20px; // 公司信息表单边距
+$comInfoTextFieldWidth: 45%; // 公司信息表单输入框宽度
+$comInfoTextFieldMargin: (100% - $comInfoTextFieldWidth * 2) / 4; // 公司信息表单输入框横向边距
+
+$editComInfoBtnWidth: 15%; // 公司信息编辑弹窗按钮宽度
+$editComInfoBtnMargin: 15px; // 公司信息编辑弹窗按钮边距
+
 /* RequestHandle.vue */
 $imgsDialogWidth: 80%; // 图片弹窗的宽度
 $maxTmgsDialogWideth: 900px; // 图片弹窗的最大宽度
@@ -82,3 +90,9 @@ $imgNameMarginVertical: 10px; // 图片名的上下边距
 $actionDialogTextMarginTop: 10px; // 操作弹窗文字上边距
 $actionDialogTextPaddingLeft: 22px; // 操作弹窗文字左边距
 $actionDialogTextFontSize: 16px; // 操作弹窗文字大小
+$actionDialogBtnTextSize: 16px; // 操作弹窗按钮文字大小
+
+.tip-btn {
+  font-size: $actionDialogBtnTextSize;
+  font-weight: $btnTextFontWeight;
+}
