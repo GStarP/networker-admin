@@ -7,6 +7,34 @@
   left: 50%;
 }
 
+// 横向排列的 flex 布局
+@mixin flexRow {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+// 纵向排列的 flex 布局
+@mixin flexCol {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+// flex 布局的横纵向居中
+@mixin allCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* common */
+$grey-3: #333;
+$grey-6: #666;
+$grey-8: #888;
+$primary-blue: #1976D2;
+$btnTextFontWeight: 400;
+
 /* TopBar.vue */
 $topBarMinHeight: 70px; // 顶部栏最小高度
 $topBarPaddingBtm: 0px; // 顶部栏下边距
@@ -25,6 +53,46 @@ $logOutMarginBtm: 26px; // 登出按钮下边距
 $mainContainerMarginBtm: 40px; // 主容器下边距
 
 /* CompanyInfo.vue */
-$comInfoCardHeight: 800px; // 公司信息列表卡片高度(暂且定死)
+// PC
+$comInfoItemMinHeight: 120px; // 公司信息项最小高度
+$comNameSize: 18px; // 公司名字体大小
+$comSymbolSize: 16px; // 公司代码字体大小
+$comAttrSize: 12px; // 公司属性字体大小
+$comAttrMarginVertical: 10px; // 属性项纵向边距
+$comAttrHeight: ($comInfoItemMinHeight - $comAttrMarginVertical * 3) / 2; // 属性项高度
+// Phone
+$comAttrHeight: 45px; // 公司属性项高度
+
+$comInfoListPadding: 10px; // 公司信息列表内边距
+$comInfoListHeight: $comInfoListPadding * 2 + $comInfoItemMinHeight * 5; // 公司信息列表高度
 
 $comInfoLoadingRadius: 30px; // 公司信息加载圆环半径
+
+$comInfoFormMargin: 20px; // 公司信息表单边距
+$comInfoTextFieldWidth: 45%; // 公司信息表单输入框宽度
+$comInfoTextFieldMargin: (100% - $comInfoTextFieldWidth * 2) / 4; // 公司信息表单输入框横向边距
+
+$editComInfoBtnWidth: 15%; // 公司信息编辑弹窗按钮宽度
+$editComInfoBtnMargin: 15px; // 公司信息编辑弹窗按钮边距
+
+/* RequestHandle.vue */
+$imgsDialogWidth: 80%; // 图片弹窗的宽度
+$maxTmgsDialogWideth: 900px; // 图片弹窗的最大宽度
+
+$imgsContainerPaddingVertical: 3%; // 包裹图片信息容器的上下边距
+
+$imgCardWidth: 300px; // 图片卡片(包括图片名和图片)的宽度
+$imgCardMarginHorizental: 5%; // 图片卡片的左右边距
+
+$imgNameFontSize: 18px; // 图片名的字体大小
+$imgNameMarginVertical: 10px; // 图片名的上下边距
+
+$actionDialogTextMarginTop: 10px; // 操作弹窗文字上边距
+$actionDialogTextPaddingLeft: 22px; // 操作弹窗文字左边距
+$actionDialogTextFontSize: 16px; // 操作弹窗文字大小
+$actionDialogBtnTextSize: 16px; // 操作弹窗按钮文字大小
+
+.tip-btn {
+  font-size: $actionDialogBtnTextSize;
+  font-weight: $btnTextFontWeight;
+}

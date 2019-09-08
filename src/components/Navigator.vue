@@ -1,7 +1,8 @@
 <template>
   <v-navigation-drawer
     id="navigator"
-    mobile-break-point="960"
+    v-model="navigatorShow"
+    mobile-break-point="1025"
     width="260"
     app
     dark
@@ -81,6 +82,16 @@ export default {
       navigatorGradient: 'rgba(27, 27, 27, 0.7), rgba(27, 27, 27, 0.7)' // 导航栏背景图片的渐变效果
     };
   },
+  computed: {
+    navigatorShow: {
+      get () {
+        return this.$store.state.navigatorShow;
+      },
+      set (val) {
+        this.setNavigatorShow(val);
+      }
+    }
+  },
   mounted () {
     this.keepNavigator();
     this.keepTopBarTitle();
@@ -88,7 +99,7 @@ export default {
   methods: {
     ...mapMutations([
       'setTopBarTitle',
-      'toggleNavigatorShow'
+      'setNavigatorShow'
     ]),
     navigatorTo (to, name) {
       this.setTopBarTitle(name);
@@ -99,14 +110,14 @@ export default {
       });
     },
     logout () {
-      // TODO
-      alert('登出成功!');
+      // TODO:删除Cookies
+      this.$router.push('/login');
     },
     // 防止刷新后丢失当前激活的导航状态
     keepNavigator () {
       let cur = 0;
       for (let i = 0; i < this.navigatorList.length; i++) {
-        if (this.$route.path.split('/')[1] === this.navigatorList[i].to) {
+        if (this.$route.path.split('/')[2] === this.navigatorList[i].to) {
           cur = i;
           break;
         }
@@ -116,7 +127,8 @@ export default {
     // 防止刷新后丢失当前的顶部栏标题
     keepTopBarTitle () {
       let cur = '';
-      switch (this.$route.path.split('/')[1]) {
+      // TODO: 暂时使用 switch
+      switch (this.$route.path.split('/')[2]) {
         case 'statistics':
           cur = '统计数据';
           break;

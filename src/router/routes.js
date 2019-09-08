@@ -20,18 +20,32 @@ export default [
   },
   {
     path: '/',
-    redirect: 'statistics'
+    redirect: '/login'
   },
   {
-    path: '/statistics',
-    component: () => import('../views/Statistics.vue')
+    path: '/login',
+    component: () => import('../views/Login.vue')
   },
   {
-    path: '/company-info',
-    component: () => import('../views/CompanyInfo.vue')
-  },
-  {
-    path: '/request-handle',
-    component: () => import('../views/RequestHandle.vue')
+    path: '/home',
+    component: () => import('../views/Home.vue'),
+    children: [
+      {
+        path: '/',
+        redirect: '/home/statistics'
+      },
+      {
+        path: 'statistics',
+        component: () => import('../views/Statistics.vue')
+      },
+      {
+        path: 'company-info',
+        component: () => import('../views/CompanyInfo.vue')
+      },
+      {
+        path: 'request-handle',
+        component: () => import('../views/RequestHandle.vue')
+      }
+    ]
   }
 ];
