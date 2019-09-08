@@ -42,7 +42,10 @@
       "@vue/standard"
     ],
     "rules": {
-      "semi": ["error", "always"]
+      "semi": [
+        "error",
+        "always"
+      ]
     },
     "parserOptions": {
       "parser": "babel-eslint"
