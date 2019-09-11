@@ -29,6 +29,8 @@
             ></v-progress-circular>
             <div class="loading-text mt-2">加载中...</div>
           </div>
+          <!-- 公司信息为空时的提示文字 -->
+          <div class="company-info-none" v-if="!companyInfoList || companyInfoList.length === 0">暂无公司信息</div>
           <!-- 公司信息列表 -->
           <v-list>
             <template
@@ -431,11 +433,12 @@ export default {
       window.scrollTo(0, 0);
       this.setCompInfoLoading(true);
       ICompanyInfo.getCompanyInfoList(this.pageNum, this.pageSize).then((res) => {
+        // console.log(res);
         if (res.code === 200) {
           this.totalPages = res.data.totalPages;
           this.companyInfoList = res.data.companyInfoList;
         } else {
-          alert(res.msg);
+          this.showErrorSnackbar(res.msg);
         }
         this.setCompInfoLoading(false);
       });
@@ -509,6 +512,17 @@ export default {
 .card-company-info {
   padding: 0 $comInfoListPadding $comInfoListPadding $comInfoListPadding;
   min-height: $comInfoListHeight;
+  .company-info-none {
+    width: 100%;
+    height: 100px;
+    position: absolute;
+    top: 50%;
+    margin-top: -50px;
+    line-height: 100px;
+    text-align: center;
+    color: $grey-8;
+    font-size: 36px;
+  }
 }
 .company-info-item-pc {
   min-height: $comInfoItemMinHeight;
