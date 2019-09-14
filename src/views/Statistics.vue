@@ -38,14 +38,14 @@ export default {
       if (res.code === 200) {
         this.normalUserNumber = res.data;
       } else {
-        console.log('获取失败……');
+        alert('获取用户数失败……');
       }
     });
     IStatistics.getPledgeUserNumber().then(res => {
       if (res.code === 200) {
         this.pledgeUserNumber = res.data;
       } else {
-        console.log('获取失败……');
+        alert('获取用户数失败……');
       }
     });
   },

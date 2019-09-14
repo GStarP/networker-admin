@@ -85,9 +85,10 @@ export default {
       // 根据宽度判断设备是否为手机
       this.isPhone = window.innerWidth <= 500;
     },
+    // 登陆方法
     login () {
       if (this.$refs.form.validate()) {
-        ILogin.adminLogin(this.name, this.password).then(res => {
+        ILogin.mockAdminLogin(this.name, this.password).then(res => {
           if (res.code === 200) {
             if (res.msg === 'ok') {
               localStorage.setItem('State', 'isLogin');

@@ -11,7 +11,12 @@ export default {
       params: {
         role
       }
-    }).then(res => res.data);
+    }).then(res => res.data)
+      .catch(() => {
+        return {
+          code: 404
+        };
+      });
     // let res = {
     //   code: 200,
     //   msg: '',
@@ -34,7 +39,12 @@ export default {
       params: {
         role
       }
-    }).then(res => res.data);
+    }).then(res => res.data)
+      .catch(() => {
+        return {
+          code: 404
+        };
+      });
     // let res = {
     //   code: 200,
     //   msg: '',
