@@ -51,6 +51,19 @@
         </v-card>
       </v-container>
     </v-img>
+
+    <!-- 顶部居中的提示框 -->
+    <v-snackbar
+        class="snackbar"
+        v-model="snackbarShow"
+        :color="snackBarColor"
+        :timeout="2000"
+        top
+    >
+      <v-icon color="white" class="mr-3">{{ snackbarIcon }}</v-icon>
+      <div>{{ snackBarText }}</div>
+      <v-icon @click="snackbarShow = false">mdi-close-circle</v-icon>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -69,7 +82,12 @@ export default {
     password: '',
     passwordRules: [
       v => !!v || '密码不能为空！'
-    ]
+    ],
+
+    snackbarShow: false, // 是否显示提示框
+    snackbarIcon: undefined, // 提示框中图标
+    snackBarText: undefined, // 提示框中文字
+    snackBarColor: undefined // 提示框主题颜色
   }),
   mounted () {
     // 先根据屏幕宽度判断设备类型
@@ -96,10 +114,10 @@ export default {
                 this.$router.push('/home');
               }.bind(this), 300);
             } else {
-              alert(res.msg);
+              this.showErrorSnackbar(res.msg);
             }
           } else {
-            alert('请求失败，请稍后重试！');
+            this.showErrorSnackbar('请求失败，请稍后重试！');
           }
         });
         // if (this.name === 'networker' && this.password === '123') {
@@ -111,6 +129,25 @@ export default {
     },
     reset () {
       this.$refs.form.reset();
+    },
+    /**
+     * @author hxw
+     * @des 展示指定样式的提示
+     * @param {string} icon 'mdi-xxx'
+     * @param {string} text 'hxwnb'
+     * @param {string} color 'success'
+     */
+    showSnackbar (icon, text, color) {
+      this.snackbarIcon = icon;
+      this.snackBarText = text;
+      this.snackBarColor = color;
+      this.snackbarShow = true;
+    },
+    showSuccessSnackbar (text) {
+      this.showSnackbar('mdi-checkbox-marked-circle', text, 'success');
+    },
+    showErrorSnackbar (text) {
+      this.showSnackbar('mdi-alert', text, 'error');
     }
   }
 };
