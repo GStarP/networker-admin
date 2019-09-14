@@ -5,6 +5,8 @@ let baseURL = process.env.NODE_ENV === 'production'
   // : 'https://citicup.top/api';
   : 'http://47.93.27.41/api';
 
+let baseURL = '/api';
+
 const localConfig = {
   baseURL: baseURL,
   timeout: 60 * 1000,
