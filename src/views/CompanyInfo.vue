@@ -454,7 +454,7 @@ export default {
     },
     // 请求并渲染分页后的公司信息
     fetchCompanyInfoPage () {
-      ICompanyInfo.IgetCompanyInfoList(this.pageNum, this.pageSize).then((res) => {
+      ICompanyInfo.getCompanyInfoList(this.pageNum, this.pageSize).then((res) => {
         if (res.code === 200) {
           // TODO:this.totalPages = res.data.totalPages;
           this.companyInfoList = res.data;

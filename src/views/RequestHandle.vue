@@ -209,9 +209,9 @@ export default {
       // 为了手机端的交互体验, 换页时要回到顶部
       window.scrollTo(0, 0);
       this.setRequestsLoading(true);
-      IRequestHandle.IgetRequestList(this.pageNum, this.pageSize).then((res) => {
+      IRequestHandle.getRequestList(this.pageNum, this.pageSize).then((res) => {
         if (res.code === 200) {
-          this.totalPages = res.data.totalPages;
+          // TODO:this.totalPages = res.data.totalPages;
           this.requests = res.data.requestList;
         } else {
           this.showErrorSnackbar('获取申请列表失败！');
