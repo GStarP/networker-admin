@@ -20,6 +20,12 @@ export default {
   components: {
     'ad-navigator': () => import('../components/Navigator'),
     'ad-top-bar': () => import('../components/TopBar')
+  },
+  mounted () {
+    // 查看是否登陆
+    if (localStorage.getItem('State') !== 'isLogin') {
+      this.$router.push('/login');
+    }
   }
 };
 </script>
