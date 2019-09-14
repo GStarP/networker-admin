@@ -110,7 +110,7 @@ export default {
       });
     },
     logout () {
-      // TODO:删除Cookies
+      localStorage.removeItem('State');
       this.$router.push('/login');
     },
     // 防止刷新后丢失当前激活的导航状态
