@@ -21,3 +21,20 @@ export const requirePagination = function (list, pageSize, totalPages) {
     return true;
   }
 };
+
+/**
+ * @author hxw
+ * @des 判断输入是否为数字
+ * @param {string} input
+ * @returns {boolean} 是否为数字
+ */
+export const isNumber = function (input) {
+  if (input === null || input === '') {
+    return false;
+  }
+  if (!isNaN(input)) {
+    return true;
+  } else {
+    return false;
+  }
+};
