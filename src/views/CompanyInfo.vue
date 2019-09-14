@@ -447,7 +447,7 @@ export default {
           // TODO:this.totalPages = res.data.totalPages;
           this.companyInfoList = res.data;
         } else {
-          this.showErrorSnackbar(res.msg);
+          this.showErrorSnackbar('获取公司信息失败！');
         }
         this.setCompInfoLoading(false);
       });
@@ -459,7 +459,7 @@ export default {
           // TODO:this.totalPages = res.data.totalPages;
           this.companyInfoList = res.data;
         } else {
-          this.showErrorSnackbar(res.msg);
+          this.showErrorSnackbar('获取公司信息失败！');
         }
         this.setCompInfoLoading(false);
       });

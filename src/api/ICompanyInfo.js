@@ -13,7 +13,13 @@ export default {
         pageNum,
         pageSize
       }
-    }).then(res => res.data);
+    })
+      .then(res => res.data)
+      .catch(() => {
+        return {
+          code: 404
+        };
+      });
   },
   // mock data
   IgetCompanyInfoList (pageNum, pageSize) {
@@ -154,11 +160,17 @@ export default {
    * @param {number} id 公司信息id
    */
   deleteCompanyInfo (id) {
-    axios.delete('/companies', {
+    return axios.delete('/companies', {
       params: {
         id
       }
-    }).then(res => res.data);
+    })
+      .then(res => res.data)
+      .catch(() => {
+        return {
+          code: 404
+        };
+      });
   },
   /**
    * @author hxw
@@ -166,6 +178,12 @@ export default {
    * @param {CompanyInfo} info 公司信息实体
    */
   editCompanyInfo (info) {
-    axios.put('/companies', info).then(res => res.data);
+    return axios.put('/companies', info)
+      .then(res => res.data)
+      .catch(() => {
+        return {
+          code: 404
+        };
+      });
   }
 };

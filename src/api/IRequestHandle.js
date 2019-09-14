@@ -12,7 +12,13 @@ export default {
       status: false,
       pageNum,
       pageSize
-    }).then(res => res.data);
+    })
+      .then(res => res.data)
+      .catch(() => {
+        return {
+          code: 404
+        };
+      });
   },
   // mock data
   IgetRequestList (pageNum, pageSize) {
@@ -96,7 +102,13 @@ export default {
     return axios.post('/users/check', {
       checkResult: true,
       id: requestId
-    }).then(res => res.data);
+    })
+      .then(res => res.data)
+      .catch(() => {
+        return {
+          code: 404
+        };
+      });
   },
   /**
    * @author hxw
@@ -107,6 +119,12 @@ export default {
     return axios.post('/users/check', {
       checkResult: false,
       id: requestId
-    }).then(res => res.data);
+    })
+      .then(res => res.data)
+      .catch(() => {
+        return {
+          code: 404
+        };
+      });
   }
 };

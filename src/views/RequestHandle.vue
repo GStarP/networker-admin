@@ -214,7 +214,7 @@ export default {
           this.totalPages = res.data.totalPages;
           this.requests = res.data.requestList;
         } else {
-          alert(res.msg);
+          this.showErrorSnackbar('获取申请列表失败！');
         }
         this.setRequestsLoading(false);
       });
