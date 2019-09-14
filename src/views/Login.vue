@@ -2,10 +2,11 @@
   <v-container fluid style="height: max-content;padding: 0 !important;">
     <!--背景图片-->
     <v-img
+        class="background-img"
         justify-center
-        :src="this.isPhone ? require('../assets/images/bg-navigator.jpg'): require('../assets/images/bg-login.jpg')"
-        height="100%"
+        src="../assets/images/bg-navigator.jpg"
     >
+      <!--:src="this.isPhone ? require('../assets/images/bg-navigator.jpg'): require('../assets/images/bg-login.jpg')"-->
       <v-container justify-center :class="{ 'login-box-pc': !isPhone, 'login-box-phone': isPhone }">
         <v-card>
           <v-container>
@@ -54,6 +55,8 @@
 </template>
 
 <script>
+import ILogin from '../api/ILogin';
+
 export default {
   name: 'Login',
   data: () => ({
@@ -72,6 +75,10 @@ export default {
     // 先根据屏幕宽度判断设备类型
     this.onWidthChange();
     window.addEventListener('resize', this.onWidthChange);
+    // 查看是否无需登陆
+    if (localStorage.getItem('State') === 'isLogin') {
+      this.$router.push('/home');
+    }
   },
   methods: {
     onWidthChange () {
@@ -80,12 +87,25 @@ export default {
     },
     login () {
       if (this.$refs.form.validate()) {
-        if (this.name === 'networker' && this.password === '123') {
-          // todo:存Cookies还是LocalStorage
-          this.$router.push('/home');
-        } else {
-          alert('账号或密码错误啊喂！');
-        }
+        ILogin.adminLogin(this.name, this.password).then(res => {
+          if (res.code === 200) {
+            if (res.msg === 'ok') {
+              localStorage.setItem('State', 'isLogin');
+              setTimeout(function () {
+                this.$router.push('/home');
+              }.bind(this), 300);
+            } else {
+              alert(res.msg);
+            }
+          } else {
+            alert('请求失败，请稍后重试！');
+          }
+        });
+        // if (this.name === 'networker' && this.password === '123') {
+        //   this.$router.push('/home');
+        // } else {
+        //   alert('账号或密码错误啊喂！');
+        // }
       }
     },
     reset () {
@@ -96,6 +116,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .background-img{
+    height: 100vh;
+    width: 100vw;
+  }
   .login-box-pc{
     width: 40%;
     margin-top: 10%;
