@@ -6,8 +6,8 @@ function resolve(dir) {
 
 // 生产环境部署的路径
 const BASE_URL = process.env.NODE_ENV === 'production' ?
-  '/networker/admin' :
-  '/'
+  '/networker/admin'
+  : '/';
 
 module.exports = {
   publicPath: BASE_URL,
@@ -42,6 +42,14 @@ module.exports = {
   devServer: {
     https: false,
     open: true, // 自动启动浏览器
-    port: 8080
+    port: 8080,
+    proxy: {
+      '/api': {   //api 代理配置
+        target: process.env.NODE_ENV === "production" ?
+          'http://localhost' :          //部署环境
+          'http://localhost:8080',      //本地运行环境
+        changeOrigin: true,
+      },
+    }
   }
-}
+};

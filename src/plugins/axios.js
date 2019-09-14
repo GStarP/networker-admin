@@ -1,8 +1,6 @@
 import axios from 'axios';
 
-let baseURL = process.env.NODE_ENV === 'production'
-  ? 'http://localhost/api'
-  : 'https://citicup.top/api';
+let baseURL = '/api';
 
 const localConfig = {
   baseURL: baseURL,
