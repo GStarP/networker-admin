@@ -16,6 +16,17 @@
         </div>
       </v-card>
     </v-card>
+    <!-- 顶部居中的提示框 -->
+    <v-snackbar
+        v-model="snackbarShow"
+        :color="snackBarColor"
+        :timeout="2000"
+        top
+    >
+      <v-icon color="white" class="mr-3">{{ snackbarIcon }}</v-icon>
+      <div>{{ snackBarText }}</div>
+      <v-icon @click="snackbarShow = false">mdi-close-circle</v-icon>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -26,7 +37,11 @@ export default {
     return {
       isPhone: false,
       normalUserNumber: 0,
-      pledgeUserNumber: 0
+      pledgeUserNumber: 0,
+      snackbarShow: false, // 是否显示提示框
+      snackbarIcon: undefined, // 提示框中图标
+      snackBarText: undefined, // 提示框中文字
+      snackBarColor: undefined // 提示框主题颜色
     };
   },
   mounted () {
@@ -38,14 +53,14 @@ export default {
       if (res.code === 200) {
         this.normalUserNumber = res.data;
       } else {
-        console.log('获取失败……');
+        this.showErrorSnackbar('获取普通用户数失败！');
       }
     });
     IStatistics.getPledgeUserNumber().then(res => {
       if (res.code === 200) {
         this.pledgeUserNumber = res.data;
       } else {
-        console.log('获取失败……');
+        this.showErrorSnackbar('获取质权方用户数失败！');
       }
     });
   },
@@ -53,6 +68,25 @@ export default {
     onWidthChange () {
       // 根据宽度判断设备是否为手机
       this.isPhone = window.innerWidth <= 500;
+    },
+    /**
+     * @author hxw
+     * @des 展示指定样式的提示
+     * @param {string} icon 'mdi-xxx'
+     * @param {string} text 'hxwnb'
+     * @param {string} color 'success'
+     */
+    showSnackbar (icon, text, color) {
+      this.snackbarIcon = icon;
+      this.snackBarText = text;
+      this.snackBarColor = color;
+      this.snackbarShow = true;
+    },
+    showSuccessSnackbar (text) {
+      this.showSnackbar('mdi-checkbox-marked-circle', text, 'success');
+    },
+    showErrorSnackbar (text) {
+      this.showSnackbar('mdi-alert', text, 'error');
     }
   }
 };
