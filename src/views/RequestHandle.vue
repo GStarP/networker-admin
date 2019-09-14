@@ -11,13 +11,10 @@
         hide-default-footer
       >
         <!-- TODO: 目前只能傻傻地全写一遍 -->
-        <template v-slot:header.name="{ header }">
+        <template v-slot:header.bankName="{ header }">
           <span class="request-table-header">{{ header.text }}</span>
         </template>
-        <template v-slot:header.no="{ header }">
-          <span class="request-table-header">{{ header.text }}</span>
-        </template>
-        <template v-slot:header.code="{ header }">
+        <template v-slot:header.swiftCode="{ header }">
           <span class="request-table-header">{{ header.text }}</span>
         </template>
         <template v-slot:header.email="{ header }">
@@ -32,7 +29,7 @@
         <!-- 自定义的 验证图片 列 -->
         <template v-slot:item.imgs="{ item }">
           <!-- 点击弹出显示图片 -->
-          <a @click.stop="showImgs(item.applicant, item.license)">点此查看</a>
+          <a @click.stop="showImgs(item.avatar, item.avatar)">点此查看</a>
         </template>
         <!-- 自定义的 申请处理 列 -->
         <template v-slot:item.action="{ item }">
@@ -137,24 +134,19 @@ export default {
   data () {
     return {
       pageNum: 1, // 当前页码
-      pageSize: 5, // 页大小
+      pageSize: 7, // 页大小
       totalPages: undefined, // 总页数
       // 数据表格表头
       headers: [
         {
           text: '银行名称',
           sortable: false,
-          value: 'name'
-        },
-        {
-          text: '银行编号',
-          sortable: true,
-          value: 'no'
+          value: 'bankName'
         },
         {
           text: 'Swift Code',
           sortable: false,
-          value: 'code'
+          value: 'swiftCode'
         },
         {
           text: '银行公邮',
@@ -217,7 +209,7 @@ export default {
       // 为了手机端的交互体验, 换页时要回到顶部
       window.scrollTo(0, 0);
       this.setRequestsLoading(true);
-      IRequestHandle.getRequestList(this.pageNum, this.pageSize).then((res) => {
+      IRequestHandle.IgetRequestList(this.pageNum, this.pageSize).then((res) => {
         if (res.code === 200) {
           this.totalPages = res.data.totalPages;
           this.requests = res.data.requestList;

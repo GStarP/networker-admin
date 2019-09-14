@@ -8,6 +8,14 @@ export default {
    * @param {number} pageSize 页大小
    */
   getRequestList (pageNum, pageSize) {
+    return axios.post('/users/investor', {
+      status: false,
+      pageNum,
+      pageSize
+    }).then(res => res.data);
+  },
+  // mock data
+  IgetRequestList (pageNum, pageSize) {
     let res = {
       code: 200,
       data: {
@@ -15,47 +23,58 @@ export default {
         requestList: [
           {
             id: 1,
-            name: '郝呆银行',
-            no: '123456',
-            code: 'HXW123456',
-            email: 'hxwnb@qq.com',
-            applicant: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566452659496&di=9300a3b95ee88c81063565ca1bbba4a0&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201806%2F29%2F20180629184010_CFA5a.thumb.700_0.jpeg',
+            bankName: '香港中国银行',
+            swiftCode: 'BKCHHKHH',
+            email: 'xgzg@bank.com',
+            avatar: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566452659496&di=9300a3b95ee88c81063565ca1bbba4a0&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201806%2F29%2F20180629184010_CFA5a.thumb.700_0.jpeg',
             license: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566456326439&di=8ff8ea15c89a1f6d81f5c510222a6cb1&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201807%2F03%2F20180703005315_mvtnw.jpg'
           },
           {
             id: 2,
-            name: '紫宁银行',
-            no: '103091',
-            code: 'ZZN103091',
-            email: 'lovezzn@163.com',
-            applicant: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566452659496&di=9300a3b95ee88c81063565ca1bbba4a0&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201806%2F29%2F20180629184010_CFA5a.thumb.700_0.jpeg',
+            bankName: '香港招商银行',
+            swiftCode: 'CMBCHKHH',
+            email: 'xgzs@bank.com',
+            avatar: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566452659496&di=9300a3b95ee88c81063565ca1bbba4a0&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201806%2F29%2F20180629184010_CFA5a.thumb.700_0.jpeg',
             license: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566456326439&di=8ff8ea15c89a1f6d81f5c510222a6cb1&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201807%2F03%2F20180703005315_mvtnw.jpg'
           },
           {
             id: 3,
-            name: '小草银行',
-            no: '991004',
-            code: 'LXC991004',
-            email: 'lxcclchg@126.com',
-            applicant: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566452659496&di=9300a3b95ee88c81063565ca1bbba4a0&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201806%2F29%2F20180629184010_CFA5a.thumb.700_0.jpeg',
+            bankName: '香港恒生银行',
+            swiftCode: 'HASEHKHH',
+            email: 'xghs@bank.com',
+            avatar: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566452659496&di=9300a3b95ee88c81063565ca1bbba4a0&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201806%2F29%2F20180629184010_CFA5a.thumb.700_0.jpeg',
             license: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566456326439&di=8ff8ea15c89a1f6d81f5c510222a6cb1&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201807%2F03%2F20180703005315_mvtnw.jpg'
           },
           {
             id: 4,
-            name: '紫婷银行',
-            no: '200000',
-            code: 'LZT200000',
-            email: 'mimilee@gmail.com',
-            applicant: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566452659496&di=9300a3b95ee88c81063565ca1bbba4a0&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201806%2F29%2F20180629184010_CFA5a.thumb.700_0.jpeg',
+            bankName: '北京中国银行',
+            swiftCode: 'BKCHCNBJ110',
+            email: 'bjzg@bank.com',
+            avatar: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566452659496&di=9300a3b95ee88c81063565ca1bbba4a0&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201806%2F29%2F20180629184010_CFA5a.thumb.700_0.jpeg',
             license: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566456326439&di=8ff8ea15c89a1f6d81f5c510222a6cb1&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201807%2F03%2F20180703005315_mvtnw.jpg'
           },
           {
             id: 5,
-            name: '小七银行',
-            no: '777777',
-            code: 'LMY777777',
-            email: 'cjkalmy@sina.com',
-            applicant: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566452659496&di=9300a3b95ee88c81063565ca1bbba4a0&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201806%2F29%2F20180629184010_CFA5a.thumb.700_0.jpeg',
+            bankName: '中国工商银行',
+            swiftCode: 'ICBKCNBJ',
+            email: 'zggs@bank.com',
+            avatar: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566452659496&di=9300a3b95ee88c81063565ca1bbba4a0&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201806%2F29%2F20180629184010_CFA5a.thumb.700_0.jpeg',
+            license: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566456326439&di=8ff8ea15c89a1f6d81f5c510222a6cb1&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201807%2F03%2F20180703005315_mvtnw.jpg'
+          },
+          {
+            id: 6,
+            bankName: '中国农业银行',
+            swiftCode: 'ABOCCNBJ',
+            email: 'zgny@bank.com',
+            avatar: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566452659496&di=9300a3b95ee88c81063565ca1bbba4a0&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201806%2F29%2F20180629184010_CFA5a.thumb.700_0.jpeg',
+            license: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566456326439&di=8ff8ea15c89a1f6d81f5c510222a6cb1&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201807%2F03%2F20180703005315_mvtnw.jpg'
+          },
+          {
+            id: 7,
+            bankName: '中国建设银行',
+            swiftCode: 'PCBCCNBJ',
+            email: 'zgjs@bank.com',
+            avatar: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566452659496&di=9300a3b95ee88c81063565ca1bbba4a0&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201806%2F29%2F20180629184010_CFA5a.thumb.700_0.jpeg',
             license: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566456326439&di=8ff8ea15c89a1f6d81f5c510222a6cb1&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201807%2F03%2F20180703005315_mvtnw.jpg'
           }
         ]
@@ -74,16 +93,10 @@ export default {
    * @param {number} requestId
    */
   acceptRequest (requestId) {
-    let res = {
-      code: 200,
-      data: null,
-      msg: ''
-    };
-    return new Promise((resolve, reject) => {
-      setTimeout(function () {
-        resolve(res);
-      }, 1000);
-    });
+    return axios.post('/users/check', {
+      checkResult: true,
+      id: requestId
+    }).then(res => res.data);
   },
   /**
    * @author hxw
@@ -91,15 +104,9 @@ export default {
    * @param {number} requestId
    */
   refuseRequest (requestId) {
-    let res = {
-      code: 200,
-      data: null,
-      msg: ''
-    };
-    return new Promise((resolve, reject) => {
-      setTimeout(function () {
-        resolve(res);
-      }, 1000);
-    });
+    return axios.post('/users/check', {
+      checkResult: false,
+      id: requestId
+    }).then(res => res.data);
   }
 };

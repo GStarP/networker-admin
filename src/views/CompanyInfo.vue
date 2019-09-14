@@ -30,7 +30,7 @@
             <div class="loading-text mt-2">加载中...</div>
           </div>
           <!-- 公司信息为空时的提示文字 -->
-          <div class="company-info-none" v-if="!companyInfoList || companyInfoList.length === 0">暂无公司信息</div>
+          <div class="company-info-none" v-if="showNoneInfoTxt">暂无公司信息</div>
           <!-- 公司信息列表 -->
           <v-list>
             <template
@@ -42,65 +42,65 @@
                 :key="item.id"
               >
                 <div class="company-identity">
-                  <div class="company-name">{{ item.name }}</div>
-                  <div class="company-symbol">{{ item.symbol }}</div>
+                  <div class="company-name">{{ item.market.name }}</div>
+                  <div class="company-symbol">{{ item.ts_code }}</div>
                 </div>
                 <div class="company-attrs">
                   <div class="company-amount">
                     <div class="company-attr-name">成交额(亿)</div>
-                    <div>{{ item.amount }}</div>
+                    <div>{{ item.market.amount }}</div>
                   </div>
                   <div class="company-amplitude">
                     <div class="company-attr-name">振幅(%)</div>
-                    <div>{{ item.amplitude }}</div>
+                    <div>{{ item.market.amplitude }}</div>
                   </div>
                   <div class="company-change">
                     <div class="company-attr-name">涨跌额</div>
-                    <div>{{ item.change }}</div>
+                    <div>{{ item.market.change }}</div>
                   </div>
                   <div class="company-close">
                     <div class="company-attr-name">收盘价</div>
-                    <div>{{ item.close }}</div>
+                    <div>{{ item.market.close }}</div>
                   </div>
                   <div class="highest">
                     <div class="company-attr-name">最高价</div>
-                    <div>{{ item.highest }}</div>
+                    <div>{{ item.market.highest }}</div>
                   </div>
                   <div class="company-list_age">
                     <div class="company-attr-name">市龄</div>
-                    <div>{{ item.list_age }}</div>
+                    <div>{{ item.market.list_age }}</div>
                   </div>
                   <div class="company-lowest">
                     <div class="company-attr-name">最低价</div>
-                    <div>{{ item.lowest }}</div>
+                    <div>{{ item.market.lowest }}</div>
                   </div>
                   <div class="company-open">
                     <div class="company-attr-name">开盘价</div>
-                    <div>{{ item.open }}</div>
+                    <div>{{ item.market.open }}</div>
                   </div>
                   <div class="company-pb">
                     <div class="company-attr-name">市净率</div>
-                    <div>{{ item.pb }}</div>
+                    <div>{{ item.market.pb }}</div>
                   </div>
                   <div class="company-pct_chg">
                     <div class="company-attr-name">涨跌幅(%)</div>
-                    <div>{{ item.pct_chg }}</div>
+                    <div>{{ item.market.pct_chg }}</div>
                   </div>
                   <div class="company-pe">
                     <div class="company-attr-name">市盈率</div>
-                    <div>{{ item.pe }}</div>
+                    <div>{{ item.market.pe }}</div>
                   </div>
                   <div class="company-pre_close">
                     <div class="company-attr-name">昨日收盘价</div>
-                    <div>{{ item.pre_close }}</div>
+                    <div>{{ item.market.pre_close }}</div>
                   </div>
                   <div class="company-turnover_rate">
                     <div class="company-attr-name">换手率(%)</div>
-                    <div>{{ item.turnover_rate }}</div>
+                    <div>{{ item.market.turnover_rate }}</div>
                   </div>
                   <div class="company-vol">
                     <div class="company-attr-name">成交量(万)</div>
-                    <div>{{ item.vol }}</div>
+                    <div>{{ item.market.vol }}</div>
                   </div>
                 </div>
                 <div class="company-action">
@@ -119,7 +119,7 @@
               v-model="pageNum"
               :length="totalPages"
               :total-visible="totalPages"
-              @input="fetchCompanyInfoPage()"
+              @input="swiftPage()"
           ></v-pagination>
           </div>
         </v-card>
@@ -139,97 +139,97 @@
           v-model="valid"
         >
           <v-text-field
-            v-model="curCompanyInfo.name"
+            v-model="curCompanyInfo.market.name"
             :class="{ 'company-info-textfield-pc': !isPhone }"
             :rules="comInfoRules.name"
             label="名称"
           ></v-text-field>
           <v-text-field
-            v-model="curCompanyInfo.symbol"
+            v-model="curCompanyInfo.ts_code"
             :class="{ 'company-info-textfield-pc': !isPhone }"
             :rules="comInfoRules.symbol"
             label="代码">
           </v-text-field>
           <v-text-field
-            v-model="curCompanyInfo.amount"
+            v-model="curCompanyInfo.market.amount"
             :class="{ 'company-info-textfield-pc': !isPhone }"
             :rules="comInfoRules.amount"
             label="成交额(亿)"
           ></v-text-field>
           <v-text-field
-            v-model="curCompanyInfo.amplitude"
+            v-model="curCompanyInfo.market.amplitude"
             :class="{ 'company-info-textfield-pc': !isPhone }"
             :rules="comInfoRules.amplitude"
             label="振幅(%)"
           ></v-text-field>
           <v-text-field
-            v-model="curCompanyInfo.change"
+            v-model="curCompanyInfo.market.change"
             :class="{ 'company-info-textfield-pc': !isPhone }"
             :rules="comInfoRules.change"
             label="涨跌额"
           ></v-text-field>
           <v-text-field
-            v-model="curCompanyInfo.close"
+            v-model="curCompanyInfo.market.close"
             :class="{ 'company-info-textfield-pc': !isPhone }"
             :rules="comInfoRules.close"
             label="收盘价"
           ></v-text-field>
           <v-text-field
-            v-model="curCompanyInfo.highest"
+            v-model="curCompanyInfo.market.highest"
             :class="{ 'company-info-textfield-pc': !isPhone }"
             :rules="comInfoRules.highest"
             label="最高价"
           ></v-text-field>
           <v-text-field
-            v-model="curCompanyInfo.list_age"
+            v-model="curCompanyInfo.market.list_age"
             :class="{ 'company-info-textfield-pc': !isPhone }"
             :rules="comInfoRules.list_age"
             label="市龄"
           ></v-text-field>
           <v-text-field
-            v-model="curCompanyInfo.lowest"
+            v-model="curCompanyInfo.market.lowest"
             :class="{ 'company-info-textfield-pc': !isPhone }"
             :rules="comInfoRules.lowest"
             label="最低价"
           ></v-text-field>
           <v-text-field
-            v-model="curCompanyInfo.open"
+            v-model="curCompanyInfo.market.open"
             :class="{ 'company-info-textfield-pc': !isPhone }"
             :rules="comInfoRules.open"
             label="开盘价"
           ></v-text-field>
           <v-text-field
-            v-model="curCompanyInfo.pb"
+            v-model="curCompanyInfo.market.pb"
             :class="{ 'company-info-textfield-pc': !isPhone }"
             :rules="comInfoRules.pb"
             label="市净率"
           ></v-text-field>
           <v-text-field
-            v-model="curCompanyInfo.pct_chg"
+            v-model="curCompanyInfo.market.pct_chg"
             :class="{ 'company-info-textfield-pc': !isPhone }"
             :rules="comInfoRules.pct_chg"
             label="涨跌幅(%)"
           ></v-text-field>
           <v-text-field
-            v-model="curCompanyInfo.pe"
+            v-model="curCompanyInfo.market.pe"
             :class="{ 'company-info-textfield-pc': !isPhone }"
             :rules="comInfoRules.pe"
             label="市盈率"
           ></v-text-field>
           <v-text-field
-            v-model="curCompanyInfo.pre_close"
+            v-model="curCompanyInfo.market.pre_close"
             :class="{ 'company-info-textfield-pc': !isPhone }"
             :rules="comInfoRules.pre_close"
             label="昨日收盘价"
           ></v-text-field>
           <v-text-field
-            v-model="curCompanyInfo.turnover_rate"
+            v-model="curCompanyInfo.market.turnover_rate"
             :class="{ 'company-info-textfield-pc': !isPhone }"
             :rules="comInfoRules.turnover_rate"
             label="换手率(%)"
           ></v-text-field>
           <v-text-field
-            v-model="curCompanyInfo.vol"
+            v-model="curCompanyInfo.market.vol"
             :class="{ 'company-info-textfield-pc': !isPhone }"
             :rules="comInfoRules.vol"
             label="成交量(万)"
@@ -323,22 +323,24 @@ export default {
       // 当前正在修改的公司信息
       curCompanyInfo: {
         id: 0,
-        amount: 0,
-        amplitude: 0,
-        change: 0,
-        close: 0,
-        highest: 0,
-        list_age: 0,
-        lowest: 0,
-        name: '',
-        open: 0,
-        pb: 0,
-        pct_chg: 0,
-        pe: 0,
-        pre_close: 0,
-        symbol: '',
-        turnover_rate: 0,
-        vol: 0
+        ts_code: '',
+        market: {
+          amount: 0,
+          amplitude: 0,
+          change: 0,
+          close: 0,
+          highest: 0,
+          list_age: 0,
+          lowest: 0,
+          name: '',
+          open: 0,
+          pb: 0,
+          pct_chg: 0,
+          pe: 0,
+          pre_close: 0,
+          turnover_rate: 0,
+          vol: 0
+        }
       },
       // 修改公司信息表单的验证规则
       comInfoRules: {
@@ -409,6 +411,10 @@ export default {
     // 是否需要显示分页
     showPagination () {
       return requirePagination(this.companyInfoList, this.pageSize, this.totalPages);
+    },
+    // 是否显示暂无公司信息的文字
+    showNoneInfoTxt () {
+      return (!this.companyInfoList || this.companyInfoList.length === 0) && (!this.compInfoLoading);
     }
   },
   mounted () {
@@ -423,20 +429,35 @@ export default {
   },
   methods: {
     ...mapMutations(['setCompInfoLoading']),
-    // TODO: 搜索公司信息
-    search () {
-      alert(this.keyword);
-    },
-    // 请求并渲染分页后的公司信息
-    fetchCompanyInfoPage () {
+    // 换页: 根据 keyword 判断是否需要进行搜索
+    swiftPage () {
       this.companyInfoList = undefined;
       window.scrollTo(0, 0);
       this.setCompInfoLoading(true);
-      ICompanyInfo.getCompanyInfoList(this.pageNum, this.pageSize).then((res) => {
-        // console.log(res);
+      if (!this.keyword || this.keyword === '') {
+        this.fetchCompanyInfoPage();
+      } else {
+        this.search();
+      }
+    },
+    // 搜索公司信息
+    search () {
+      ICompanyInfo.getSearchInfoList(this.keyword, this.pageNum, this.pageSize).then(res => {
         if (res.code === 200) {
-          this.totalPages = res.data.totalPages;
-          this.companyInfoList = res.data.companyInfoList;
+          // TODO:this.totalPages = res.data.totalPages;
+          this.companyInfoList = res.data;
+        } else {
+          this.showErrorSnackbar(res.msg);
+        }
+        this.setCompInfoLoading(false);
+      });
+    },
+    // 请求并渲染分页后的公司信息
+    fetchCompanyInfoPage () {
+      ICompanyInfo.IgetCompanyInfoList(this.pageNum, this.pageSize).then((res) => {
+        if (res.code === 200) {
+          // TODO:this.totalPages = res.data.totalPages;
+          this.companyInfoList = res.data;
         } else {
           this.showErrorSnackbar(res.msg);
         }
@@ -460,6 +481,7 @@ export default {
           this.showErrorSnackbar('修改失败！');
         }
       });
+      this.swiftPage(); // 刷新信息列表
     },
     // 请求删除公司信息
     deleteCompanyInfo (id) {
@@ -476,6 +498,7 @@ export default {
           this.showErrorSnackbar('删除失败！');
         }
       });
+      this.swiftPage();
     },
     // 根据宽度判断设备是否为手机
     onWidthChange () {

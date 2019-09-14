@@ -18,10 +18,10 @@
       <!-- 头像&用户名 -->
       <v-list-item class="navigator-top-container">
         <v-list-item-avatar size="55px">
-          <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566056260480&di=e2d40fa70fea3c96bf76c0da92ed7ca9&imgtype=0&src=http%3A%2F%2Fwx1.sinaimg.cn%2Forj360%2F006TKNNEgy1g05bvn7nrgj30m80m849o.jpg">
+          <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1568468973789&di=4492ab063cb9465937fc2da2da210867&imgtype=0&src=http%3A%2F%2Fbpic.588ku.com%2Felement_origin_min_pic%2F17%2F07%2F05%2F247f529bb1bf688b9d8dc21149f449e0.jpg">
         </v-list-item-avatar>
         <v-list-item-content>
-          <v-list-item-title>hxw3274743</v-list-item-title>
+          <v-list-item-title>Admin</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
       <v-divider class="navigator-divider"/>
