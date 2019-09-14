@@ -151,85 +151,85 @@
             label="代码">
           </v-text-field>
           <v-text-field
-            v-model="curCompanyInfo.market.amount"
+            v-model.number="curCompanyInfo.market.amount"
             :class="{ 'company-info-textfield-pc': !isPhone }"
             :rules="comInfoRules.amount"
             label="成交额(亿)"
           ></v-text-field>
           <v-text-field
-            v-model="curCompanyInfo.market.amplitude"
+            v-model.number="curCompanyInfo.market.amplitude"
             :class="{ 'company-info-textfield-pc': !isPhone }"
             :rules="comInfoRules.amplitude"
             label="振幅(%)"
           ></v-text-field>
           <v-text-field
-            v-model="curCompanyInfo.market.change"
+            v-model.number="curCompanyInfo.market.change"
             :class="{ 'company-info-textfield-pc': !isPhone }"
             :rules="comInfoRules.change"
             label="涨跌额"
           ></v-text-field>
           <v-text-field
-            v-model="curCompanyInfo.market.close"
+            v-model.number="curCompanyInfo.market.close"
             :class="{ 'company-info-textfield-pc': !isPhone }"
             :rules="comInfoRules.close"
             label="收盘价"
           ></v-text-field>
           <v-text-field
-            v-model="curCompanyInfo.market.highest"
+            v-model.number="curCompanyInfo.market.highest"
             :class="{ 'company-info-textfield-pc': !isPhone }"
             :rules="comInfoRules.highest"
             label="最高价"
           ></v-text-field>
           <v-text-field
-            v-model="curCompanyInfo.market.list_age"
+            v-model.number="curCompanyInfo.market.list_age"
             :class="{ 'company-info-textfield-pc': !isPhone }"
             :rules="comInfoRules.list_age"
             label="市龄"
           ></v-text-field>
           <v-text-field
-            v-model="curCompanyInfo.market.lowest"
+            v-model.number="curCompanyInfo.market.lowest"
             :class="{ 'company-info-textfield-pc': !isPhone }"
             :rules="comInfoRules.lowest"
             label="最低价"
           ></v-text-field>
           <v-text-field
-            v-model="curCompanyInfo.market.open"
+            v-model.number="curCompanyInfo.market.open"
             :class="{ 'company-info-textfield-pc': !isPhone }"
             :rules="comInfoRules.open"
             label="开盘价"
           ></v-text-field>
           <v-text-field
-            v-model="curCompanyInfo.market.pb"
+            v-model.number="curCompanyInfo.market.pb"
             :class="{ 'company-info-textfield-pc': !isPhone }"
             :rules="comInfoRules.pb"
             label="市净率"
           ></v-text-field>
           <v-text-field
-            v-model="curCompanyInfo.market.pct_chg"
+            v-model.number="curCompanyInfo.market.pct_chg"
             :class="{ 'company-info-textfield-pc': !isPhone }"
             :rules="comInfoRules.pct_chg"
             label="涨跌幅(%)"
           ></v-text-field>
           <v-text-field
-            v-model="curCompanyInfo.market.pe"
+            v-model.number="curCompanyInfo.market.pe"
             :class="{ 'company-info-textfield-pc': !isPhone }"
             :rules="comInfoRules.pe"
             label="市盈率"
           ></v-text-field>
           <v-text-field
-            v-model="curCompanyInfo.market.pre_close"
+            v-model.number="curCompanyInfo.market.pre_close"
             :class="{ 'company-info-textfield-pc': !isPhone }"
             :rules="comInfoRules.pre_close"
             label="昨日收盘价"
           ></v-text-field>
           <v-text-field
-            v-model="curCompanyInfo.market.turnover_rate"
+            v-model.number="curCompanyInfo.market.turnover_rate"
             :class="{ 'company-info-textfield-pc': !isPhone }"
             :rules="comInfoRules.turnover_rate"
             label="换手率(%)"
           ></v-text-field>
           <v-text-field
-            v-model="curCompanyInfo.market.vol"
+            v-model.number="curCompanyInfo.market.vol"
             :class="{ 'company-info-textfield-pc': !isPhone }"
             :rules="comInfoRules.vol"
             label="成交量(万)"
@@ -309,7 +309,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex';
-import { requirePagination } from '../utils/common';
+import { requirePagination, isNumber } from '../utils/common';
 import ICompanyInfo from '../api/ICompanyInfo';
 
 export default {
@@ -345,54 +345,64 @@ export default {
       // 修改公司信息表单的验证规则
       comInfoRules: {
         amount: [
-          v => !!v || '此项不能为空'
+          v => !!v || '此项不能为空',
+          v => isNumber(v) || '此项必须为数字'
         ],
         amplitude: [
-          v => !!v || '此项不能为空'
+          v => !!v || '此项不能为空',
+          v => isNumber(v) || '此项必须为数字'
         ],
         change: [
-          v => !!v || '此项不能为空'
+          v => !!v || '此项不能为空',
+          v => isNumber(v) || '此项必须为数字'
         ],
         close: [
-          v => !!v || '此项不能为空'
+          v => !!v || '此项不能为空',
+          v => isNumber(v) || '此项必须为数字'
         ],
         highest: [
-          v => !!v || '此项不能为空'
+          v => !!v || '此项不能为空',
+          v => isNumber(v) || '此项必须为数字'
         ],
         list_age: [
-          v => !!v || '此项不能为空'
+          v => !!v || '此项不能为空',
+          v => isNumber(v) || '此项必须为数字'
         ],
         lowest: [
-          v => !!v || '此项不能为空'
+          v => !!v || '此项不能为空',
+          v => isNumber(v) || '此项必须为数字'
         ],
         name: [
           v => !!v || '此项不能为空',
           v => (v && v.length <= 10) || '不能超过10位'
         ],
         open: [
-          v => !!v || '此项不能为空'
+          v => !!v || '此项不能为空',
+          v => isNumber(v) || '此项必须为数字'
         ],
         pb: [
-          v => !!v || '此项不能为空'
+          v => !!v || '此项不能为空',
+          v => isNumber(v) || '此项必须为数字'
         ],
         pct_chg: [
-          v => !!v || '此项不能为空'
+          v => !!v || '此项不能为空',
+          v => isNumber(v) || '此项必须为数字'
         ],
         pe: [
-          v => !!v || '此项不能为空'
+          v => !!v || '此项不能为空',
+          v => isNumber(v) || '此项必须为数字'
         ],
         pre_close: [
-          v => !!v || '此项不能为空'
-        ],
-        symbol: [
           v => !!v || '此项不能为空',
-          v => (v && v.length <= 10) || '不能超过10位'
+          v => isNumber(v) || '此项必须为数字'
         ],
         turnover_rate: [
-          v => !!v || '此项不能为空'
+          v => !!v || '此项不能为空',
+          v => isNumber(v) || '此项必须为数字'
         ],
         vol: [
-          v => !!v || '此项不能为空'
+          v => !!v || '此项不能为空',
+          v => isNumber(v) || '此项必须为数字'
         ]
       },
       valid: false, // 修改公司信息表单是否合格
@@ -422,7 +432,7 @@ export default {
     this.onWidthChange();
     window.addEventListener('resize', this.onWidthChange);
     // 获取分页数据
-    this.fetchCompanyInfoPage();
+    this.swiftPage();
   },
   beforeDestroy () {
     window.removeEventListener('resize', this.onWidthChange);
@@ -473,7 +483,7 @@ export default {
     // 提交修改后的公司信息
     submitEdit () {
       this.editDialogShow = false;
-      alert(JSON.stringify(this.curCompanyInfo));
+      // alert(JSON.stringify(this.curCompanyInfo));
       ICompanyInfo.editCompanyInfo(this.curCompanyInfo).then((res) => {
         if (res.code === 200) {
           this.showSuccessSnackbar('修改成功！');

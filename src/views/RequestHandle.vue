@@ -29,7 +29,7 @@
         <!-- 自定义的 验证图片 列 -->
         <template v-slot:item.imgs="{ item }">
           <!-- 点击弹出显示图片 -->
-          <a @click.stop="showImgs(item.avatar, item.avatar)">点此查看</a>
+          <a @click.stop="showImgs(item.avatar)">点此查看</a>
         </template>
         <!-- 自定义的 申请处理 列 -->
         <template v-slot:item.action="{ item }">
@@ -135,7 +135,7 @@ export default {
     return {
       pageNum: 1, // 当前页码
       pageSize: 7, // 页大小
-      totalPages: undefined, // 总页数
+      totalPages: 10, // 总页数
       // 数据表格表头
       headers: [
         {
@@ -169,10 +169,6 @@ export default {
       imgDialogShow: false, // 是否显示图片展示弹窗
       // 当前的验证图片路径
       imgs: [
-        {
-          name: '申请人',
-          url: ''
-        },
         {
           name: '营业执照',
           url: ''
@@ -220,9 +216,8 @@ export default {
       });
     },
     // 展示指定申请的验证图片
-    showImgs (applicant, license) {
-      this.imgs[0].url = applicant;
-      this.imgs[1].url = license;
+    showImgs (avatar) {
+      this.imgs[0].url = avatar;
       this.imgDialogShow = true;
     },
     // 显示操作确认弹窗
