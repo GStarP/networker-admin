@@ -4,11 +4,11 @@
     <v-img
         class="background-img"
         justify-center
-        src="../assets/images/bg-navigator.jpg"
+        src="../assets/images/bg-login.jpg"
     >
       <!--:src="this.isPhone ? require('../assets/images/bg-navigator.jpg'): require('../assets/images/bg-login.jpg')"-->
       <v-container justify-center :class="{ 'login-box-pc': !isPhone, 'login-box-phone': isPhone }">
-        <v-card>
+        <v-card class="box">
           <v-container>
             <h2>管理员登录</h2>
             <v-form
@@ -30,6 +30,7 @@
                   required
               ></v-text-field>
 
+              <div class="button-box">
               <v-btn
                   id="confirm"
                   :disabled="!valid"
@@ -46,6 +47,7 @@
               >
                 清空
               </v-btn>
+              </div>
             </v-form>
           </v-container>
         </v-card>
@@ -101,7 +103,7 @@ export default {
   methods: {
     onWidthChange () {
       // 根据宽度判断设备是否为手机
-      this.isPhone = window.innerWidth <= 500;
+      this.isPhone = window.innerWidth <= 1100;
     },
     // 登陆方法
     login () {
@@ -158,15 +160,21 @@ export default {
     height: 100vh;
     width: 100vw;
   }
+  .box{
+    background-color: rgba(255, 255, 255, 0.7);
+  }
   .login-box-pc{
-    width: 40%;
-    margin-top: 10%;
+    width: 30%;
+    margin-top: 15%;
     border-radius: 10px;
   }
   .login-box-phone{
     width: 65%;
     margin-top: 50%;
     border-radius: 10px;
+  }
+  .button-box{
+    @include allCenter;
   }
   #confirm{
     background-color: #2196f3;
