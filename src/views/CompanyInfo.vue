@@ -465,7 +465,7 @@ export default {
       ICompanyInfo.getCompanyInfoList(this.pageNum, this.pageSize).then((res) => {
         if (res.code === 200) {
           // TODO:this.totalPages = res.data.totalPages;
-          this.companyInfoList = res.data;
+          this.companyInfoList = swiftModel(res.data);
         } else {
           this.showErrorSnackbar('获取公司信息失败！');
         }
