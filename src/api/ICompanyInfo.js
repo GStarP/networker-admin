@@ -8,7 +8,7 @@ export default {
    * @param {number} pageSize 页大小
    */
   getCompanyInfoList (pageNum, pageSize) {
-    return axios.get('/plus/companies/list', {
+    return axios.get('/plus/companies', {
       params: {
         pageNum,
         pageSize
@@ -136,7 +136,7 @@ export default {
    * @param {number} pageSize 页大小
    */
   getSearchInfoList (key, pageNum, pageSize) {
-    return axios.get('/plus/companies', {
+    return axios.get('/plus/companies/query', {
       params: {
         key,
         pageSize,
