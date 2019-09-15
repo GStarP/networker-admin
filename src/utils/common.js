@@ -38,3 +38,37 @@ export const isNumber = function (input) {
     return false;
   }
 };
+
+export const swiftModel = function (companyInfoList) {
+  let res = [];
+  for (let info of companyInfoList) {
+    let temp = {
+      id: 0,
+      name: '',
+      ts_code: '',
+      amount: 0,
+      change: 0,
+      close: 0,
+      high: 0,
+      low: 0,
+      open: 0,
+      pct_chg: 0,
+      pre_close: 0,
+      vol: 0
+    };
+    temp.id = info.id;
+    temp.name = info.name || '';
+    temp.ts_code = info.ts_code;
+    temp.amount = info.market.amount;
+    temp.change = info.market.change;
+    temp.close = info.market.close;
+    temp.high = info.market.highest;
+    temp.low = info.market.lowest;
+    temp.open = info.market.open;
+    temp.pct_chg = info.market.pct_chg;
+    temp.pre_close = info.market.pre_close;
+    temp.vol = info.market.vol;
+    res.push(temp);
+  }
+  return res;
+};
