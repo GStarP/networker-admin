@@ -57,7 +57,7 @@ export const swiftModel = function (companyInfoList) {
       vol: 0
     };
     temp.id = info.id;
-    temp.name = info.name || '';
+    temp.name = info.market.name || '';
     temp.ts_code = info.ts_code;
     temp.amount = info.market.amount;
     temp.change = info.market.change;
