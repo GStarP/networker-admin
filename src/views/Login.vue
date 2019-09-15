@@ -106,7 +106,7 @@ export default {
     // 登陆方法
     login () {
       if (this.$refs.form.validate()) {
-        ILogin.mockAdminLogin(this.name, this.password).then(res => {
+        ILogin.adminLogin(this.name, this.password).then(res => {
           if (res.code === 200) {
             if (res.msg === 'ok') {
               localStorage.setItem('State', 'isLogin');
